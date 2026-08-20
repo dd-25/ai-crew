@@ -1,0 +1,13 @@
+# Anything an agent produces at runtime. Reports and scratch output are session artifacts,
+# not team definition.
+scratch/
+out/
+
+# Settings written per-machine by Claude Code. Permissions granted on this laptop are not
+# permissions on the next one.
+.claude/settings.local.json
+
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
