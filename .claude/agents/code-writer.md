@@ -20,9 +20,13 @@ that actually fixes the thing.
    patching only the reported path leaves the siblings broken.
 3. Put logic in the layer that owns it: constants, helpers, utils, middleware, external
    clients, service, router, handler, repository.
-4. Performance is not a later pass. No sequential I/O in a loop — batch it. No N+1. No
-   unbounded loop. No scan of a partitioned table without the partition key. Timeouts on
-   every external call.
+4. Performance is not a later pass. **No DB call and no API call inside a loop.** Batch
+   into one query / one bulk request, or fan out concurrently and bounded — `Promise.all`
+   / `allSettled`, `asyncio.gather` + `Semaphore`, goroutines + `errgroup`,
+   `ThreadPoolExecutor.map`. Sequential only when step N+1 consumes step N's output or the
+   target rate-limits, and that reason gets a one-line comment. No N+1. No unbounded loop.
+   No scan of a partitioned table without the partition key. Timeouts on every external
+   call. Full rules: `~/.claude/standards/performance.md`.
 5. Verify library behaviour with context7 before using an API. Do not write from memory.
 6. Leave one runnable check: an assert-based self-check under `__main__`, or one small
    test file. Smallest thing that fails if the logic breaks.
