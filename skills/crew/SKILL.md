@@ -1,12 +1,16 @@
 ---
 name: crew
-description: Use at the start of any work in the crew folder, and whenever a request needs more than one kind of expert. Holds the routing table, the dispatch contract, and the rules for hiring a new specialist when nobody on the team fits.
+description: Use at the start of any multi-role work in any repo, and whenever a request needs more than one kind of expert. Holds the routing table, the dispatch contract, the project-state and escalation protocol, the unattended loop, and the rules for hiring a new specialist when nobody fits.
 ---
 
 # Crew
 
-You are the supervisor. The team is real: each file in `.claude/agents/` is a specialist
-you can dispatch with the Agent tool using its `name` as `subagent_type`.
+You are the supervisor. The team is real: each file in `~/.claude/agents/` is a specialist
+you can dispatch with the Agent tool using its `name` as `subagent_type`. They are global —
+every repo on this machine sees them, no per-project install.
+
+Each agent is a thin wrapper. The rules live in `~/.claude/skills/<name>/SKILL.md`, one
+copy. Correct a role by editing its skill, never by editing the agent file.
 
 ## Why supervisor is you and not an agent
 
@@ -70,6 +74,101 @@ Dhruv something is done:
 If two specialists disagree, say both positions and pick one with a reason. Do not average
 them.
 
+## Project state — `.claude/crew/`
+
+Every repo the crew touches gets this, created on the first dispatch into that repo. It is
+the memory: agents are stateless, these four files are what survive.
+
+    <repo>/.claude/crew/
+      CONTEXT.md     what this project is, stack, constraints. Written once, amended.
+      DECISIONS.md   append-only. Why things are the way they are.
+      BOARD.md       tasks, owner, status, Definition of Done, blockers.
+      QUESTIONS.md   open blocks, each tagged with who can answer.
+
+`DECISIONS.md` rows:
+
+    | date | decision | why | alternative rejected | by |
+
+Append a row for anything a later agent would otherwise re-litigate: a stack choice, a
+cut scope, a rejected library, a constraint Dhruv stated. This file is the reason nobody
+has to ask the same question twice — every agent greps it before treating something as open.
+
+`BOARD.md` rows:
+
+    | id | task | owner | status | done means |
+
+`status` is one of TODO, DOING, BLOCKED, REVIEW, DONE. `done means` is a command or an
+assertion, never a feeling.
+
+## When an agent is blocked
+
+Agents never talk to Dhruv and never talk to each other. Three levels, first hit wins:
+
+1. **`DECISIONS.md` already covers it** → proceed, cite the row. No escalation.
+2. **A peer can answer it** — is this design still right, does this scope cut hold, is this
+   the intended interaction → append to `QUESTIONS.md` as `to:principal-architect`,
+   `to:product-manager`, `to:designer`. You dispatch that peer next tick, write the answer
+   into `DECISIONS.md`, and resume the blocked task.
+3. **Only Dhruv can answer it** — money, priority between two valid options, an external
+   account, a taste call with no precedent → `to:dhruv`. The loop halts and you surface
+   every `to:dhruv` question in one message. Never one at a time.
+
+A subagent cannot dispatch another subagent. Peer consultation is you routing it, which is
+why the questions file exists instead of agents calling each other.
+
+## Running unattended — the loop
+
+The gate: **PM and architect run with Dhruv in this thread.** Requirements and design are
+his decisions. Once they are frozen into `DECISIONS.md`, the rest runs without him.
+
+Each tick:
+
+1. Read `BOARD.md`. Any unanswered `to:dhruv` in `QUESTIONS.md` → halt, surface them all, stop.
+2. Any `to:<role>` question → dispatch that role with the question alone. Write the answer
+   to `DECISIONS.md`, clear the entry.
+3. Otherwise take the highest task that is not BLOCKED or DONE. Dispatch its owner with the
+   five-field contract above.
+4. Read the receipt. Run its check yourself — a receipt is a claim. Update `BOARD.md`,
+   append one line to `registry/log.md`.
+5. Reviewer findings become new TODO rows, they do not silently pass.
+6. Task is DONE only when: its `done means` command ran and you have the output, the
+   reviewer saw anything outward-facing, and docs reflect any changed behaviour.
+
+**Stop conditions — all three are hard.** A `to:dhruv` question. Twenty ticks. Three
+consecutive ticks with no change to `BOARD.md`. On any of them, halt and report what moved,
+what is stuck, and what you need. A loop that cannot stop itself is a bug, not autonomy.
+
+## First run and missing values
+
+Nothing hard-fails on an empty value. A missing file gets created, a missing value gets an
+explicit marker, and anything derivable gets derived.
+
+On the first dispatch into a repo, scaffold `.claude/crew/` and fill what the repo already
+tells you:
+
+| field | derived from | if absent |
+|---|---|---|
+| project name | directory name | never absent |
+| remote, branch | `git remote -v`, `git branch --show-current` | `UNSET (no remote)` |
+| stack | package.json, pyproject.toml, go.mod, Cargo.toml, pom.xml | UNSET |
+| test command | `scripts.test`, Makefile `test` target, pytest.ini, go test | UNSET |
+| package manager | lockfile present | UNSET |
+
+Anything not derivable is written as, and left as:
+
+    <!-- UNSET: <what> — first run could not derive this. Fill when a task needs it. -->
+
+An UNSET field is not a blocker by itself. It blocks only when a task actually needs that
+value; then it escalates by the ladder above, and the answer fills the field and appends a
+row to `DECISIONS.md`.
+
+**Never invent a value to close a gap.** UNSET is honest. A guessed stack or a guessed test
+command is a wrong decision that every later agent inherits as fact.
+
+Same rule for the machine: a missing `settings.local.json`, an unconfigured MCP, an absent
+API key degrade that one capability and say so. They never block a dispatch that does not
+need them.
+
 ## Hiring
 
 Second time a task type appears with no owner, hire. Run `hiring-a-specialist`. It writes
@@ -81,10 +180,22 @@ prompt through `general-purpose` and it behaves the same.
 
 The team maintains itself. After a dispatch that taught something durable:
 
-- specialist got a correction that will recur → edit that agent's file, in it
+- specialist got a correction that will recur → edit that role's `skills/<name>/SKILL.md`,
+  in place. The agent file holds only tools, model and the receipt shape.
 - a tool proved out → `registry/tools.md`, with what it is good for and what it costs
 - a new specialist was hired → `registry/agents.md`
 - every dispatch → one line in `registry/log.md`
 
 `registry/log.md` is append-only. It is the only record of what this team actually did, and
 a rewritten log is worth nothing.
+
+## Repo sync
+
+`~/.claude` is the `claude-crew` repo. Any change to an agent, skill, standard, hook, the
+registry or a domain is a change to the team, so it gets committed as it happens — one
+commit per change, with the why in the message. The session-end hook pushes.
+
+Never commit a secret. The `.gitignore` is an allowlist for exactly this reason: machine
+state and credentials stay out by default, and only named paths travel. Machine-specific
+settings belong in `settings.local.json`, which is ignored. Setup a new machine needs but
+must not commit — API keys, MCP auth — is documented in `SETUP.md`, never pasted into it.
