@@ -1,4 +1,4 @@
-# claude-crew
+# ai-crew
 
 Dhruv's Claude Code setup as one repo: a standing team of agents, the skills that hold
 their rules, the standards they work to, and the config that ties it together.
@@ -6,7 +6,14 @@ their rules, the standards they work to, and the config that ties it together.
 This repo **is** `~/.claude`. Clone it there and everything is live in every project on
 that machine — no per-project install, no symlinks, nothing to copy.
 
-    git clone https://github.com/dd-25/claude-crew.git ~/.claude
+**Built for Claude Code.** The ideas here are harness-agnostic — a supervisor thread,
+specialists separated by their refusals, rules in one place, state in the repo — but the
+wiring is not. Agent and skill discovery paths, frontmatter keys (`tools`, `model`),
+`Skill()` invocation, the Stop hook and `settings.json` are all Claude Code specifics.
+Porting to another harness means keeping the structure and rewriting that wiring; the
+markdown itself carries over almost unchanged.
+
+    git clone https://github.com/dd-25/ai-crew.git ~/.claude
 
 A machine that already has a `~/.claude` needs the recovery path in [SETUP.md](SETUP.md).
 
@@ -17,7 +24,7 @@ A machine that already has a `~/.claude` needs the recovery path in [SETUP.md](S
     settings.json    portable config: model, permissions, hooks, plugins, marketplaces.
 
     agents/          11 specialists, dispatchable by name as subagent_type.
-    skills/          19 skills. Every rule lives here, exactly once.
+    skills/          18 skills. Every rule lives here, exactly once.
     standards/       engineering, performance, architecture, docs, style.
     hooks/           session-end hook.
 

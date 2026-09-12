@@ -17,14 +17,14 @@ and is listed as UNSET, never guessed.
 
 ## 2. Clone into the config directory
 
-    git clone https://github.com/dd-25/claude-crew.git ~/.claude
+    git clone https://github.com/dd-25/ai-crew.git ~/.claude
 
 **If `~/.claude` already exists** — Claude Code created it on first run — do not delete it.
 Attach the repo to it instead:
 
     cd ~/.claude
     git init
-    git remote add origin https://github.com/dd-25/claude-crew.git
+    git remote add origin https://github.com/dd-25/ai-crew.git
     git fetch origin main
     git checkout -f -B main origin/main
 
@@ -82,7 +82,7 @@ Nothing to do; absent is a valid state.
 ## 7. Verify
 
     ls ~/.claude/agents | wc -l          # 11
-    ls ~/.claude/skills | wc -l          # 19
+    ls ~/.claude/skills | wc -l          # 18
     git -C ~/.claude status --short      # clean
     bash ~/.claude/scripts/crew-doctor.sh # 5 PASS lines, exit 0
     claude mcp list                      # whatever you configured in step 5

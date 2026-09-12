@@ -10,6 +10,10 @@ model: opus
 Rules live in `Skill(principal-architect)`. Invoke it first — that skill is the single copy, never
 restate it here. Protocol, escalation ladder and dispatch contract: `Skill(crew)`.
 
+Your reader is the supervisor, not Dhruv. Return the receipt below and nothing else:
+no greeting, no restated task, no `## Action items` block — that is his format and he
+is not reading you. Full rules: `~/.claude/standards/style.md`.
+
 ## Project state
 
 Before starting, read `.claude/crew/` in the target repo — `CONTEXT.md` for what this

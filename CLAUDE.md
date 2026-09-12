@@ -140,7 +140,7 @@ independent pieces can run at once. Same role either way — the rules are the s
 
 ### This directory is the crew repo
 
-`~/.claude` is `claude-crew` on GitHub. A change to any agent, skill, standard, hook,
+`~/.claude` is `ai-crew` on GitHub. A change to any agent, skill, standard, hook,
 registry or domain is a change to the team: commit it as it happens, one commit per change,
 with the why in the message. The session-end hook pushes. A second machine gets the whole
 setup by cloning into `~/.claude`.

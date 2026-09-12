@@ -1,6 +1,6 @@
 ---
 name: crew
-description: Use at the start of any multi-role work in any repo, and whenever a request needs more than one kind of expert. Holds the routing table, the dispatch contract, the project-state and escalation protocol, the unattended loop, and the rules for hiring a new specialist when nobody fits.
+description: Use at the start of any multi-role work in any repo, and whenever a request needs more than one kind of expert. Holds the dispatch contract, the project-state and escalation protocol, the unattended loop, and the rules for hiring a new specialist when nobody fits. The routing table itself lives in CLAUDE.md.
 ---
 
 # Crew
@@ -23,23 +23,13 @@ because that resistance fails silently.
 
 ## Routing table
 
-| Request looks like | Dispatch |
-|---|---|
-| vague, "build X", crosses three roles | decompose yourself, then dispatch in order below |
-| what to build, for whom, scope, cut list | `product-manager` |
-| how it is structured, stack choice, boundaries, ADR | `principal-architect` |
-| break it into ordered shippable steps, estimate, risk | `engineering-manager` |
-| write or change code | `senior-developer` |
-| review a diff, branch, PR, or design | `senior-code-reviewer` |
-| test strategy, edge cases, regression for a bug | `senior-tester` |
-| README, doc, post, email, any prose Dhruv sends or publishes | `doc-writer` |
-| UI, layout, visual direction, component look | `designer` |
-| find a better tool, MCP, plugin, or approach | `explorer` |
-| errands, chasing, filling, tracking, repeated chores | `daily-task-doer` |
-| nobody above fits | `hiring-a-specialist` skill |
+Lives in `~/.claude/CLAUDE.md` under **Problem → first responder**, which is loaded in every
+session already. It is keyed on what Dhruv actually says rather than on job titles. Do not
+keep a second copy here — two routing tables drift, and the one that drifts is the one
+nobody reads.
 
-Chain them. Real work crosses roles: PM defines, architect designs, engineering-manager sequences,
-senior-developer builds, senior-tester verifies, senior-code-reviewer checks, doc-writer records.
+`founder` holds the other table: situation → the whole *chain* of roles. This one picks a
+single role; that one picks a sequence. Use `founder` when the work needs more than one.
 
 ## Dispatch contract
 
@@ -191,7 +181,7 @@ a rewritten log is worth nothing.
 
 ## Repo sync
 
-`~/.claude` is the `claude-crew` repo. Any change to an agent, skill, standard, hook, the
+`~/.claude` is the `ai-crew` repo. Any change to an agent, skill, standard, hook, the
 registry or a domain is a change to the team, so it gets committed as it happens — one
 commit per change, with the why in the message. The session-end hook pushes.
 
