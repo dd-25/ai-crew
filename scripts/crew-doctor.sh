@@ -45,10 +45,25 @@ stale=$(grep -rn '\.claude/agents' \
         | grep -v '/registry/log\.md:' \
         | awk '{t=$0; gsub(/~\/\.claude\/agents/,"",t); if (t ~ /\.claude\/agents/) print}')
 
+# Model tier is declared twice — agent frontmatter and the registry table. Nothing else
+# compares them, so they drift silently and the registry quietly starts lying.
+model_drift=""
+for f in "$ROOT"/agents/*.md; do
+  [ -e "$f" ] || continue
+  n=$(basename "$f" .md)
+  fm=$(frontmatter "$f" | sed -n 's/^model:[[:space:]]*//p')
+  rg=$(awk -F'|' -v n="$n" '{gsub(/^[ 	]+|[ 	]+$/,"",$2); if ($2==n) {gsub(/^[ 	]+|[ 	]+$/,"",$5); print $5; exit}}' "$ROOT/registry/agents.md")
+  if [ -n "$rg" ] && [ "$fm" != "$rg" ]; then
+    model_drift="${model_drift}agents/$n.md (file: ${fm:-none}, registry: $rg)
+"
+  fi
+done
+
 report "every agent has a matching skills/<name>/SKILL.md" "$no_skill"
 report "every agent has a row in registry/agents.md"       "$no_row"
 report "every agent declares tools: and model:"            "$no_decl"
 report "every agent's name: matches its filename"          "$bad_name"
 report "no stale .claude/agents path (log.md exempt)"      "$stale"
+report "agent model matches its registry row"              "$model_drift"
 
 exit $FAILED
