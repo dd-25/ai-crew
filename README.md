@@ -1,52 +1,71 @@
-# crew
+# claude-crew
 
-Dhruv's standing team, as Claude Code agents and skills. Not a framework, not a runtime —
-files that Claude Code already reads.
+Dhruv's Claude Code setup as one repo: a standing team of agents, the skills that hold
+their rules, the standards they work to, and the config that ties it together.
 
-## How to use it
+This repo **is** `~/.claude`. Clone it there and everything is live in every project on
+that machine — no per-project install, no symlinks, nothing to copy.
 
-    cd D:\Coding\Projects\crew
-    claude
+    git clone https://github.com/dd-25/claude-crew.git ~/.claude
 
-The main thread becomes the supervisor. Ask for anything; it routes.
+A machine that already has a `~/.claude` needs the recovery path in [SETUP.md](SETUP.md).
 
-To use the team on another project, dispatch from here with paths into that project, or
-symlink `.claude/agents/` into `~/.claude/agents/` to make every role available everywhere.
+## Layout
 
-## What is in here
+    CLAUDE.md        standing orders. Loaded every session, so it stays short.
+    SETUP.md         machine bootstrap. Read only when setting up or when a tool is missing.
+    settings.json    portable config: model, permissions, hooks, plugins, marketplaces.
 
-    CLAUDE.md              the supervisor's standing orders
-    .claude/agents/        11 specialists, dispatchable by name
-    .claude/skills/
-      crew/                routing table, dispatch contract, auto-update rules
-      hiring-a-specialist/ how a new role gets created when nobody fits
-      tool-scouting/       how a candidate tool gets evaluated and mostly rejected
-    registry/
-      agents.md            who exists, what they own, what they refuse
-      tools.md             validated tools, and the rejections that stop re-litigation
-      log.md               append-only record of every dispatch
-    domains/
-      career/              job hunt context; pipeline lives in ../jopply
-      build/               side projects
+    agents/          11 specialists, dispatchable by name as subagent_type.
+    skills/          18 skills. Every rule lives here, exactly once.
+    standards/       engineering, performance, architecture, docs, style.
+    hooks/           session-end hook.
 
-## The design in four lines
+    registry/        agents.md (roster), tools.md (validated + rejected), log.md (dispatches).
+    domains/         standing context per area: career/, build/.
 
-The supervisor is the main thread, not an agent — it already holds the conversation, and a
-dispatch-only agent burns a context window forwarding messages.
+## How it holds together
 
-Specialists are separated by their **refusals**, not their titles. The reviewer has no Edit
-tool; the explorer cannot install; nothing ships without a review. Two roles with the same
-refusals are one role wearing two hats.
+**The supervisor is the main thread, not an agent.** It already holds the conversation and
+the correction history. An agent whose only job is dispatching other agents burns a whole
+context window forwarding messages — and a subagent cannot dispatch a subagent anyway.
 
-Hiring happens on the **second** occurrence of an unowned task, never the first. The
-`hiring-a-specialist` skill writes the agent file and returns a prompt usable immediately,
-because new agent files only register as `subagent_type` at session start.
+**Agents are thin; skills are thick.** An agent file carries only what is agent-specific:
+its tools, its model, and the receipt shape it returns. The rules live in
+`skills/<name>/SKILL.md`, one copy. Two copies of a rule drift, and the drift is silent.
 
-No LangGraph. It needs an API key that does not exist here, and skills plus agents do the
-same routing at zero cost. Revisit when there is a key and a reason to run unattended.
+**Specialists are separated by their refusals, not their titles.** `senior-code-reviewer`
+has no Edit tool, so it cannot start fixing instead of reviewing. `explorer` cannot install.
+`career-assistant` cannot send. Two roles with the same refusals are one role in two hats.
 
-## Auto-update
+**State lives in the target repo, not in anyone's memory.** The first dispatch into a repo
+scaffolds `.claude/crew/` — `CONTEXT.md`, `DECISIONS.md` (append-only), `BOARD.md`,
+`QUESTIONS.md`. Agents are stateless; those four files are what survives the session.
 
-The team edits itself: a correction that will recur goes into that agent's file, a proven
-tool goes into `registry/tools.md`, a new role goes into `registry/agents.md`, and every
-dispatch appends one line to `registry/log.md`. `registry/log.md` is append-only.
+**Blocks escalate, they do not interrupt.** An agent checks `DECISIONS.md` first, then tags
+a question for a peer, and only reaches Dhruv for the things that are genuinely his — money,
+priority, an external account, a taste call with no precedent. One batched message, never a
+queue of interruptions.
+
+**Nothing invents a value.** A field that cannot be derived is written `UNSET` and left
+that way. A guessed stack or test command becomes a fact every later agent inherits.
+
+## What is deliberately not in here
+
+| Excluded | Why |
+|---|---|
+| `.credentials.json`, OAuth tokens | secrets, never in git |
+| `settings.local.json` | machine-specific paths that feed safety decisions |
+| `plugins/` | declared in `settings.json`; reinstalled from their marketplaces |
+| MCP server config | lives in `~/.claude.json` next to API keys — see SETUP.md |
+| `projects/`, `sessions/`, `history.jsonl`, `shell-snapshots/` | transcripts: large, machine-local, and full of project content |
+| every cache | regenerates |
+
+`.gitignore` is an allowlist — ignore everything, re-include named paths — so the next
+cache file Claude Code invents does not leak by default.
+
+## Keeping it current
+
+A change to an agent, skill, standard, hook, registry or domain is a change to the team, so
+it gets its own commit as it happens. The session-end hook pushes. Another machine runs
+`git pull` in `~/.claude`.

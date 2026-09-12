@@ -75,11 +75,58 @@ Match the work to the role. Invoke the skill. Announce in one line: `[role] <wha
 | README, ADR, API doc, runbook, changelog, any draft | `doc-writer` |
 | terms, agreement, disclaimer, privacy/consent notice, policy, liability wording | `legal-writer` |
 | "why", "teach me", "explain", learning a concept | `mentor` |
+| UI, layout, visual direction, component look | `designer` |
+| find a better tool, MCP, plugin, or approach | `explorer` |
+| recurring chores with a defined procedure | `daily-task-doer` |
+| the job hunt, outreach, application packs | `career-assistant` |
 
 Chain them. Real work crosses roles — PM defines, architect designs, dev builds, tester
 verifies, reviewer checks, doc-writer records. Do not stop at one role because one was named.
 
 `mentor` layers on top of any other role — never replaces it. Ship the work, then teach.
+
+## Crew — the same roles as dispatchable agents
+
+Every role above also exists as an agent in `~/.claude/agents/`, global to every repo.
+A skill runs in this thread; an agent runs in its own context window. Use an agent when the
+work is big enough that its reading would crowd this thread out. `Skill(crew)` holds the
+routing table, the dispatch contract, the escalation ladder and the unattended loop.
+
+1. **Route, don't do.** Work that matches a specialist goes to that specialist. Do it inline
+   only when it is smaller than the cost of a handoff — one file, obvious, reversible.
+2. **Hire when nobody fits.** Second time an unowned kind of task appears, run
+   `hiring-a-specialist`. Never quietly absorb unowned work twice.
+3. **Nothing ships unreviewed.** Anything leaving this machine — code, a message, a
+   document, an application — passes `senior-code-reviewer` before I see it as done.
+4. **Rules live in skills, one copy.** Correct a role by editing `skills/<name>/SKILL.md`.
+   The agent file holds only its tools, its model and its receipt shape.
+5. **State lives in the repo.** `.claude/crew/{CONTEXT,DECISIONS,BOARD,QUESTIONS}.md`,
+   created on first dispatch. Agents read `DECISIONS.md` before asking anything, and never
+   ask me directly — a block is tagged for a peer or for me, and the supervisor relays.
+
+### Registry and domains
+
+- `registry/agents.md` — who exists, what they own, what they refuse. Update on every hire.
+- `registry/tools.md` — tools the explorer validated, and the rejections that stop re-litigation.
+- `registry/log.md` — one line per dispatch. Append, never rewrite.
+- `domains/career/`, `domains/build/` — standing context for one area. Pass the path in a
+  dispatch, never paste the file.
+
+### This directory is the crew repo
+
+`~/.claude` is `claude-crew` on GitHub. A change to any agent, skill, standard, hook,
+registry or domain is a change to the team: commit it as it happens, one commit per change,
+with the why in the message. The session-end hook pushes. A second machine gets the whole
+setup by cloning into `~/.claude`.
+
+Never commit a secret. `.gitignore` is an allowlist so machine state and credentials stay
+out by default; machine-specific settings go in `settings.local.json`, which is ignored.
+Machine setup — API keys, MCP auth, plugin install — is described in `SETUP.md`. Read that
+file only when setting up a machine or when a tool is missing; it is not context for normal
+work.
+
+Nothing fails on a missing value. An absent key, MCP, or settings file degrades that one
+capability and says so out loud. Never invent a value to fill a gap.
 
 ## Code gate — these two skills are mandatory, not optional
 
