@@ -23,8 +23,8 @@ A machine that already has a `~/.claude` needs the recovery path in [SETUP.md](S
     SETUP.md         machine bootstrap. Read only when setting up or when a tool is missing.
     settings.json    portable config: model, permissions, hooks, plugins, marketplaces.
 
-    agents/          11 specialists, dispatchable by name as subagent_type.
-    skills/          18 skills. Every rule lives here, exactly once.
+    agents/          10 specialists, dispatchable by name as subagent_type.
+    skills/          17 skills. Every rule lives here, exactly once.
     standards/       engineering, performance, architecture, docs, style.
     hooks/           session-end hook.
 

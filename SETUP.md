@@ -81,8 +81,8 @@ Nothing to do; absent is a valid state.
 
 ## 7. Verify
 
-    ls ~/.claude/agents | wc -l          # 11
-    ls ~/.claude/skills | wc -l          # 18
+    ls ~/.claude/agents | wc -l          # 10
+    ls ~/.claude/skills | wc -l          # 17
     git -C ~/.claude status --short      # clean
     bash ~/.claude/scripts/crew-doctor.sh # 5 PASS lines, exit 0
     claude mcp list                      # whatever you configured in step 5

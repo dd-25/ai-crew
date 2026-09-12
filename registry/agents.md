@@ -14,7 +14,6 @@ Hired agents live in `~/.claude/agents/`. Dispatch with the Agent tool using `na
 | doc-writer | every word Dhruv sends or publishes | inventing facts, sending, private-note leakage | opus | 2026-08-20 |
 | designer | visual direction, hierarchy, tokens | decoration without information, new tokens when one fits | opus | 2026-08-20 |
 | explorer | finding and killing candidate tools | installing anything, recommending on a README | sonnet | 2026-08-20 |
-| daily-task-doer | the written recurring chores | anything irreversible, improvising past a failed step | sonnet | 2026-08-20 |
 | career-assistant | the job hunt in ../jopply | submitting, sending, connecting, cookie auth | opus | 2026-08-20 |
 
 ## Why these and not more
@@ -28,3 +27,10 @@ Missing on purpose: a "supervisor" agent (the main thread supervises — see
 skill), a "researcher" (explorer covers it), a "manager" separate from engineering-manager.
 
 ## Hires and firings
+
+- 2026-09-12 **fired `daily-task-doer`.** Hired 2026-08-20, never dispatched, and no
+  procedure was ever written for it — its own skill said "follow the defined procedure"
+  while no procedure existed, so any dispatch would have blocked immediately. Speculative
+  headcount is what the hire-on-the-second-occurrence rule exists to prevent, and the rule
+  was broken in its own favour. `hiring-a-specialist` recreates it in one dispatch the day
+  a real recurring chore turns up.

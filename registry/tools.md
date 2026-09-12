@@ -20,7 +20,7 @@ good at: filling application forms on pages with no API
 costs: none beyond the extension; needs per-site permission
 risk: a triggered JS dialog freezes the extension until dismissed by hand
 verified: 2026-08 filling the Policybazaar Google Form (11 fields via browser_batch)
-who uses it: career-assistant, daily-task-doer
+who uses it: career-assistant
 
 ## context7
 what: current library documentation

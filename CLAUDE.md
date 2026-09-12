@@ -77,7 +77,6 @@ Match the work to the role. Invoke the skill. Announce in one line: `[role] <wha
 | "why", "teach me", "explain", learning a concept | `mentor` |
 | UI, layout, visual direction, component look | `designer` |
 | find a better tool, MCP, plugin, or approach | `explorer` |
-| recurring chores with a defined procedure | `daily-task-doer` |
 | the job hunt, outreach, application packs | `career-assistant` |
 
 Chain them. Real work crosses roles — PM defines, architect designs, dev builds, tester
@@ -120,7 +119,7 @@ Match the symptom, not the job title. Route on the first message, never wait to 
 | README, ADR, changelog, post, email, any prose I send | `doc-writer` → `deslopify` before it goes out |
 | terms, policy, disclaimer, consent, liability | `legal-writer` |
 | "is there a better tool/MCP/library for this" | `explorer` |
-| the same chore again | `daily-task-doer`; second unowned occurrence → `hiring-a-specialist` |
+| the same chore again, nobody owns it | `hiring-a-specialist` on the second occurrence |
 | job, recruiter, referral, apply, resume, interview | `career-assistant` |
 | "why", "teach me", "explain" | `mentor`, layered on whoever else runs — never instead of them |
 | big, vague, crosses three roles | `founder` routes; `crew` holds the dispatch protocol |
