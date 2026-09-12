@@ -59,11 +59,25 @@ for f in "$ROOT"/agents/*.md; do
   fi
 done
 
+# Claude Code's auto-mode writes autoMode.environment into settings.json, which is TRACKED.
+# That block carries absolute machine paths, private repo names and a map of where secrets
+# live. It belongs in settings.local.json (gitignored). It has leaked in once already.
+leaky=""
+if [ -f "$ROOT/settings.json" ]; then
+  grep -q '"autoMode"' "$ROOT/settings.json" &&
+    leaky="${leaky}settings.json contains autoMode — move it to settings.local.json
+"
+  grep -qE '[A-Za-z]:\\' "$ROOT/settings.json" &&
+    leaky="${leaky}settings.json contains an absolute Windows path
+"
+fi
+
 report "every agent has a matching skills/<name>/SKILL.md" "$no_skill"
 report "every agent has a row in registry/agents.md"       "$no_row"
 report "every agent declares tools: and model:"            "$no_decl"
 report "every agent's name: matches its filename"          "$bad_name"
 report "no stale .claude/agents path (log.md exempt)"      "$stale"
 report "agent model matches its registry row"              "$model_drift"
+report "settings.json carries nothing machine-specific"   "$leaky"
 
 exit $FAILED
