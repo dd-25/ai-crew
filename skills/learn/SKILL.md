@@ -91,6 +91,10 @@ you touched still fits the rest:
 - **Descriptions are the router.** If the lesson was "the wrong role picked this up", the
   fix is that role's `description`, not a new rule in its body.
 
+Then run `bash ~/.claude/scripts/crew-doctor.sh`. It checks the invariants this step is
+responsible for — agent/skill pairing, registry rows, frontmatter, stale paths — and is the
+only thing that catches a half-applied rename. Exit 0 before you commit.
+
 Commit it. A skill change that is not committed does not exist on the other machine.
 
 ## Pruning

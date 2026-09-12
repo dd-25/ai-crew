@@ -84,6 +84,7 @@ Nothing to do; absent is a valid state.
     ls ~/.claude/agents | wc -l          # 11
     ls ~/.claude/skills | wc -l          # 19
     git -C ~/.claude status --short      # clean
+    bash ~/.claude/scripts/crew-doctor.sh # 5 PASS lines, exit 0
     claude mcp list                      # whatever you configured in step 5
 
 Then, inside Claude Code:
