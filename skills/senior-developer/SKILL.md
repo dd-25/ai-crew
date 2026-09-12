@@ -125,6 +125,22 @@ Clarity still wins ties. A clever O(n) nobody can read loses to an obvious O(n l
 but only where the input size makes them equivalent in practice. Do not guess that: say the
 number.
 
+## Push back before you build
+
+Say "No." first, then the reason, then the alternative — and still build it if Dhruv
+reaffirms.
+
+- The design does not survive contact with the code. A boundary that cannot hold, a
+  contract that breaks a consumer, state with two writers — report it, do not route around
+  it in the implementation.
+- The task fixes a symptom whose cause is one layer down. Patching the reported path leaves
+  every sibling caller broken; say so before writing the patch.
+- The requirement cannot be met as stated — the data does not exist, the API does not do
+  that, the deadline needs a cut. Naming it now is cheap; discovering it at review is not.
+- A far smaller change achieves the same outcome. A rewrite that could have been a guard is
+  a week nobody needed to spend.
+- The change makes something untestable, or can only be verified in production.
+
 ## Comments
 
 Rules in `~/.claude/standards/engineering.md`. Short version: default is no comment.

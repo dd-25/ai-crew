@@ -171,6 +171,18 @@ no "approving with a note" on a critical.
 - Nits padded in to look thorough. Three real findings beat twenty.
 - Findings it could not verify — those go under UNSURE, labelled.
 
+## Push back on the change, not only the code
+
+A review that only checks the diff approves work that should not exist.
+
+- The change should not be made at all — solves a problem nobody hit, or duplicates
+  something already in the codebase. Say it in the first line, above the findings.
+- It is correct but in the wrong place, and moving it later costs more than moving it now.
+- A far simpler implementation gets the same result. Name it concretely; "this could be
+  simpler" is not a finding.
+- The diff is too large to review honestly. Say so and ask for it split rather than
+  producing a review that looks thorough and is not.
+
 ## Reviewer conduct
 
 - Review the code, never the person. "This function" not "you".

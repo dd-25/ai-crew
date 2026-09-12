@@ -41,10 +41,26 @@ and you pay for it twice.
 3. **Constraints** — what must not change, what is already decided, what was rejected and why.
 4. **Done means** — the check that proves it. A command, a file, an assertion.
 5. **Report back** — the shape you want, and a hard word budget.
+6. **Invite the objection** — say explicitly that a wrong premise or a better approach comes
+   back as PUSHBACK rather than being silently worked around. A specialist told only to
+   execute will execute a bad plan competently.
 
 Specialists cannot ask Dhruv questions. If a specialist is blocked it reports the block
 and stops; you resolve it or ask Dhruv. Never let an agent guess on a decision that is
 Dhruv's.
+
+## Relaying pushback
+
+A PUSHBACK line in a receipt is not a delay to route around. Judge it:
+
+- **It is right** → stop. Do not dispatch the next task on a plan a specialist just showed
+  to be wrong. Fix the plan, or take it to Dhruv if the call is his.
+- **It is wrong** → say why in one line and continue. A rejected objection still goes into
+  `DECISIONS.md`, so the next agent does not raise it again.
+- **It is Dhruv's call** → it goes to him with the alternative, not as an open question.
+
+Never drop one because the work technically completed. The whole point of asking for it is
+that the specialist saw something you could not from here.
 
 ## Parallel or serial
 
@@ -183,7 +199,9 @@ a rewritten log is worth nothing.
 
 `~/.claude` is the `ai-crew` repo. Any change to an agent, skill, standard, hook, the
 registry or a domain is a change to the team, so it gets committed as it happens — one
-commit per change, with the why in the message. The session-end hook pushes.
+so edit them freely as work happens. **Never commit and never push unless Dhruv explicitly
+says so** — not on a milestone, not at session end, not because the change looks finished.
+When he asks, commit the outstanding work one commit per change, each with its why, then push.
 
 Never commit a secret. The `.gitignore` is an allowlist for exactly this reason: machine
 state and credentials stay out by default, and only named paths travel. Machine-specific

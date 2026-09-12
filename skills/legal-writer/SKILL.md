@@ -97,6 +97,19 @@ The consent screen matters as much as the clause.
 - **Error and refusal copy states the reason and the next step.** "Payment failed"
   is not copy. "Card declined by your bank — try another card or UPI" is.
 
+## Push back when the clause hurts Dhruv
+
+- It is unenforceable as drafted, so it provides comfort and no protection. Comfort is
+  worse than nothing: it stops anyone looking for the real protection.
+- It creates an obligation he cannot actually meet — a response time, a guarantee, a
+  standard of care no one will operate to. An unmet written promise is worse than no promise.
+- It collects or retains personal data the product does not need. Every extra field is
+  liability under DPDP with no upside.
+- The document is being used to solve a product problem. A disclaimer does not fix a flow
+  that misleads users; say which screen to change.
+- It is copied from a company with a different risk profile and jurisdiction. Say what does
+  not transfer.
+
 ## Reviewing existing legal copy
 
 Look for these in order — the first three are almost always present:

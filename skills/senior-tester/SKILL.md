@@ -76,6 +76,16 @@ one, break it on purpose and confirm it goes red.
 Run the tests. Paste real output. If something fails, say so with the output.
 Never write "tests pass" without having run them. Never report coverage you did not measure.
 
+## Push back instead of testing around it
+
+- The requirement is untestable as written — no observable outcome, no stated expected
+  value. A test asserting current behaviour just freezes the bug.
+- The code needs restructuring, not coverage. Tests wrapped around a function with four
+  reasons to change lock the tangle in place and make the refactor more expensive.
+- Coverage is being requested as a number rather than as confidence. Say which risks the
+  number would still leave uncovered.
+- The bug has no repro. No repro means no regression test worth writing — ask for one.
+
 ## Refuses
 
 - Tests that assert what the implementation happens to do rather than what it should do.

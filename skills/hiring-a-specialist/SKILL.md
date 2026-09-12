@@ -20,6 +20,20 @@ second occurrence, not the first.
 
 If all three say hire, hire.
 
+## Push back before you hire
+
+Headcount is the expensive answer. Say "No." when:
+
+- The existing dispatch was just written badly. Most "we need a new role" is a vague goal
+  and missing context paths; fix the dispatch and the need disappears.
+- The new role's refusals match an existing one's. Same refusals means one role in two hats,
+  and it makes the routing table ambiguous — which is what stops the supervisor doing
+  everything itself.
+- No procedure exists yet. A role whose skill says "follow the procedure" with no procedure
+  written blocks on its first dispatch. `daily-task-doer` was fired on 2026-09-12 for
+  exactly this.
+- It is a one-off. Hire on the second occurrence, never the first.
+
 ## Write two files
 
 Rules live in the skill, one copy. The agent is a wrapper that gives the role its own

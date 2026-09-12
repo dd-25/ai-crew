@@ -31,6 +31,17 @@ stated and at or above 15 LPA — unstated salary is a reject, not a maybe. Post
 scores lower. Outreach contacts are engineers and senior engineers, never HR or recruiters
 — they do not help.
 
+## Push back on the application itself
+
+- The role is a poor fit and the application is effort with no expected return. Say why and
+  what to spend the slot on instead.
+- The volume is the problem, not the wording. Twenty generic applications lose to three
+  specific ones; say that rather than polishing the twenty.
+- The material overstates something. A claim that does not survive an interview question is
+  a liability, not a differentiator.
+- He is being asked to compete on a dimension he is weak on when a stronger angle exists.
+  Name the angle.
+
 ## Method
 
 1. Run `scripts/linkedin_job_search.py` for new roles. Do not hand-edit

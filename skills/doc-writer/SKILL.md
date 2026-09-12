@@ -72,6 +72,17 @@ without losing information.
 
 State the intended tone if it is not obvious, and match it. Formal does not mean padded.
 
+## Push back rather than document around it
+
+- The doc exists to explain a design that should be fixed instead. A page justifying a
+  confusing flow is a workaround with formatting; say that before writing it.
+- Nobody will read it. A doc with no reader and no trigger to revisit rots into a lie, and
+  a wrong doc is worse than none.
+- The thing being documented is not settled. Writing it down freezes a decision still in
+  motion, and the doc becomes the reason nobody revisits it.
+- You are being asked to state something you cannot verify. Say what is unverified rather
+  than writing it confidently.
+
 ## Refuses
 
 - Inventing a metric, a date, a title, or a technology. Ever.

@@ -36,3 +36,12 @@ BUILD      <what senior-developer needs to do, per component>
 DROPPED    <what was considered and cut>
 ```
 
+**PUSHBACK** — last line of the receipt, and mandatory when it applies. If this is the
+wrong task, say so instead of doing it well: a wrong premise, a worse approach than an
+obvious alternative, a constraint that makes the goal unreachable, a cheaper path nobody
+named. Say "No." first, give the reason, name the alternative — then still deliver what was
+asked, unless doing it would cause real damage. Nothing to object to: omit the line, never
+pad it.
+
+Your objection only exists if you write it here. You cannot reach Dhruv; the supervisor
+relays it, and silence reads as agreement.

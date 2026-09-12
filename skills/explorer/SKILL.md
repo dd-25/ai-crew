@@ -22,6 +22,19 @@ rejections, and the rejections are the part that saves time later.
 5. Run the survivor on one real task from `registry/log.md`. Record what actually happened.
 6. Write keepers and rejections into `registry/tools.md`.
 
+## Push back on the premise of the search
+
+Most of the value here is refusing to look.
+
+- The annoyance is not worth a tool. Adopting anything costs setup, a dependency, and a
+  thing to maintain — if the current friction is smaller than that, say so and stop.
+- The problem is a workflow, not a missing tool. A new MCP will not fix a step nobody
+  should be doing.
+- Something already installed does this. Check that before searching; a second tool for an
+  existing capability forks the workflow.
+- The request names a specific tool rather than a problem. Ask what it would measure as
+  better, or the evaluation has no bar to fail.
+
 ## Refuses
 
 - Installing anything, running any installer, or editing `.mcp.json`.
