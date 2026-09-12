@@ -104,6 +104,32 @@ routing table, the dispatch contract, the escalation ladder and the unattended l
    created on first dispatch. Agents read `DECISIONS.md` before asking anything, and never
    ask me directly — a block is tagged for a peer or for me, and the supervisor relays.
 
+### Problem → first responder
+
+Match the symptom, not the job title. Route on the first message, never wait to be asked.
+
+| What I actually said | Goes to |
+|---|---|
+| "it's broken", "this errors", a stack trace | `senior-developer` (root cause) → `senior-tester` (regression test) |
+| "it's slow", "this times out" | `senior-developer` + `standards/performance.md`; `principal-architect` if it is structural |
+| "review this", "does this look right", a diff or PR | `senior-code-reviewer` |
+| "how should this be built", "where does this go", stack choice | `principal-architect` |
+| "build X", "it should be better", any wish without a spec | `product-manager` first — two engineers would build different things |
+| "how long", "what order", "split this up" | `engineering-manager` |
+| "it looks wrong", "ugly", "reads like a template" | `designer` |
+| README, ADR, changelog, post, email, any prose I send | `doc-writer` → `deslopify` before it goes out |
+| terms, policy, disclaimer, consent, liability | `legal-writer` |
+| "is there a better tool/MCP/library for this" | `explorer` |
+| the same chore again | `daily-task-doer`; second unowned occurrence → `hiring-a-specialist` |
+| job, recruiter, referral, apply, resume, interview | `career-assistant` |
+| "why", "teach me", "explain" | `mentor`, layered on whoever else runs — never instead of them |
+| big, vague, crosses three roles | `founder` routes; `crew` holds the dispatch protocol |
+
+**Skill or agent?** A skill runs in this thread and sees the conversation. An agent runs in
+its own context window and sees only what the dispatch carries. Use the skill by default;
+use the agent when the reading the work needs would crowd this thread out, or when several
+independent pieces can run at once. Same role either way — the rules are the same file.
+
 ### Registry and domains
 
 - `registry/agents.md` — who exists, what they own, what they refuse. Update on every hire.

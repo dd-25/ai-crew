@@ -1,6 +1,6 @@
 # Roster
 
-Hired agents live in `.claude/agents/`. Dispatch with the Agent tool using `name` as
+Hired agents live in `~/.claude/agents/`. Dispatch with the Agent tool using `name` as
 `subagent_type`. Update this file on every hire and every firing.
 
 | name | owns | refuses | model | hired |

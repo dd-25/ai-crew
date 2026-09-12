@@ -1,6 +1,6 @@
 ---
 name: hiring-a-specialist
-description: Use when a task arrives that no existing agent in .claude/agents/ owns, and it is the kind of task that will come back. Writes a new specialist agent file, registers it, and returns a prompt usable in the same session.
+description: Use when a task arrives that no existing role owns and it is the kind of task that will come back - an unowned chore appearing a second time, work that keeps landing on the supervisor, or a request that fits no agent in ~/.claude/agents/. Writes the new specialist as a skill plus a thin agent, registers it, and returns a prompt usable in the same session.
 ---
 
 # Hiring a specialist
@@ -13,16 +13,39 @@ second occurrence, not the first.
 
 1. Does an existing agent cover it if the dispatch is written better? Most "we need a new
    role" is a vague dispatch. Fix the dispatch first.
-2. Is it a workflow rather than a role? A repeated *procedure* is a skill in
-   `.claude/skills/`. A repeated *kind of judgement* is an agent. Do not make an agent
-   whose whole job is following one checklist.
+2. Is it a workflow rather than a role? A repeated *procedure* is a skill alone. A
+   repeated *kind of judgement* earns a skill plus an agent so it can run in its own
+   context window. Do not give an agent to something whose whole job is one checklist.
 3. Will it come back? One-off → just do it and note it in `registry/log.md`.
 
 If all three say hire, hire.
 
-## Write the file
+## Write two files
 
-`.claude/agents/<kebab-name>.md`:
+Rules live in the skill, one copy. The agent is a wrapper that gives the role its own
+context window. Splitting them is what stops the two drifting apart.
+
+**`~/.claude/skills/<kebab-name>/SKILL.md`** — everything about how the work is done:
+
+```markdown
+---
+name: <kebab-name>
+description: <the trigger sentence: the words a request actually uses when this
+             role is needed. This string is the router - Claude matches on it.>
+---
+
+# <Role>
+
+<One paragraph: what this specialist is for and what it refuses.>
+
+## Method
+<Numbered, the actual sequence. Not principles - steps.>
+
+## Refuses
+<What it hands back instead of guessing. Every specialist has a boundary.>
+```
+
+**`~/.claude/agents/<kebab-name>.md`** — the wrapper, nothing more:
 
 ```markdown
 ---
@@ -34,16 +57,14 @@ model: <sonnet for mechanical, opus for judgement>
 
 # <Role>
 
-<One paragraph: what this specialist is for and what it refuses.>
+Rules live in `Skill(<kebab-name>)`. Invoke it first - that skill is the single copy,
+never restate it here. Protocol, escalation ladder and dispatch contract: `Skill(crew)`.
 
-## Method
-<Numbered, the actual sequence. Not principles — steps.>
-
-## Refuses
-<What it hands back instead of guessing. Every specialist has a boundary.>
+## Project state
+<copy the block every other agent carries>
 
 ## Reports
-<Exact output shape and word budget.>
+<exact output shape and word budget>
 ```
 
 Rules that make the difference between a specialist and a costume:

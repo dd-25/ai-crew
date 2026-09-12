@@ -1,6 +1,6 @@
 ---
 name: deslopify
-description: Removes generic AI mannerisms, inflated phrasing, and repetition from prose while preserving the author's voice. Use when the user asks to deslopify or naturalize a draft.
+description: Removes generic AI mannerisms, inflated phrasing, and repetition from prose while preserving the author's voice. Use when asked to deslopify or naturalize a draft, and whenever text reads as AI-written - "make this sound human", "less AI", "too formal", "remove the fluff", "it sounds like ChatGPT" - or before any README, doc, post, or outreach message goes out.
 metadata:
   category: writing-style
 ---

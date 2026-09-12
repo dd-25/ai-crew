@@ -172,7 +172,7 @@ need them.
 ## Hiring
 
 Second time a task type appears with no owner, hire. Run `hiring-a-specialist`. It writes
-`.claude/agents/<name>.md` and returns a prompt usable immediately — new agent files are
+`~/.claude/agents/<name>.md` and returns a prompt usable immediately — new agent files are
 only picked up as `subagent_type` at session start, so this session you run the returned
 prompt through `general-purpose` and it behaves the same.
 
