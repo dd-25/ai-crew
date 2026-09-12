@@ -44,15 +44,17 @@ first start with no action:
 |---|---|
 | frontend-design, superpowers, code-review, context7, expo | `anthropics/claude-plugins-official` |
 | ponytail | `DietrichGebert/ponytail` |
+| ui-ux-pro-max | `nextlevelbuilder/ui-ux-pro-max-skill` |
 | caveman | `JuliusBrussee/caveman` |
 
 If one is missing, `/plugin` lists them and reinstalls. `skill-creator` is installed but
 disabled on purpose.
 
-    <!-- UNSET: ui-ux-promax, deslopify — wanted, but no marketplace source confirmed.
-         Several unrelated GitHub repos share both names and installing a plugin runs its
-         author's code every session. Add the marketplace to settings.json once the source
-         is confirmed; do not guess a repo. -->
+`ui-ux-pro-max` installs the same way — its marketplace is already declared.
+
+`deslopify` is **not** a plugin: it is a plain skill, vendored into `skills/deslopify/`, so
+it travels with this repo and needs no install. Re-pull it from
+`github.com/iurysza/agent-skills` (`skills/deslopify`) to update.
 
 ## 5. MCP servers — manual, one per machine
 
@@ -80,7 +82,7 @@ Nothing to do; absent is a valid state.
 ## 7. Verify
 
     ls ~/.claude/agents | wc -l          # 11
-    ls ~/.claude/skills | wc -l          # 18
+    ls ~/.claude/skills | wc -l          # 19
     git -C ~/.claude status --short      # clean
     claude mcp list                      # whatever you configured in step 5
 
