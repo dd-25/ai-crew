@@ -1,28 +1,36 @@
 #!/usr/bin/env node
 /**
- * Stop hook: fires the `learn` skill once per session, only when the session
- * did real work. Fully automatic - no approval step.
+ * Stop hook: fires the `learn` skill once per session, and only when the session
+ * carried a durable-lesson signal. Fully automatic - no approval step.
+ *
+ * Gating on "did real work" fired on every session with a single edit, which is
+ * most of them. A file edit is not a lesson. What predicts a lesson is Dhruv
+ * correcting something or stating a standing preference, and both of those appear
+ * in HIS messages - which the old gate never read.
  *
  * Safety:
  *  - honours stop_hook_active so it can never loop
  *  - one marker file per session id, so it fires at most once
  *  - any error exits 0 silently; a broken hook must never block a session
- *
- * Also syncs ~/.claude (the claude-crew repo): commits anything left uncommitted
- * and pushes. Best-effort - no remote, no network or no auth leaves the commits
- * waiting for the next session rather than failing the stop.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
-import { spawnSync } from 'node:child_process';
 
 const CLAUDE_DIR = path.join(os.homedir(), '.claude');
 const STATE_DIR = path.join(CLAUDE_DIR, '.learn-state');
 
-const EDIT_TOOLS = new Set(['Edit', 'Write', 'NotebookEdit', 'MultiEdit']);
-const MIN_EDITS = 1;          // any file change counts as real work
-const MIN_ASSISTANT_MSGS = 12; // or a long discussion with no edits
+const MIN_ASSISTANT_MSGS = 6; // floor: a two-line exchange has nothing to teach
+
+// A correction ("don't do that", "I said X") or a standing preference ("from now on",
+// "always") is what `learn` exists to capture. Phrases over bare words: "no" matches
+// "no problem", "actually" matches half of ordinary speech.
+const LESSON_SIGNAL =
+  /\b(?:do ?n[o']?t|i said|i told you|you keep|did it again|should ?n[o']?t|should have|why (?:did|are) you|that'?s (?:not|wrong)|not like that|revert that|undo that|from now on|going forward|always|never|remember to|instead of|stop (?:doing|adding|writing|using))\b/i;
+
+// System reminders are injected into user turns and are full of imperatives. Matching
+// them would fire the hook on every session regardless of what Dhruv actually said.
+const stripInjected = (s) => s.replace(/<system-reminder>[\s\S]*?<\/system-reminder>/g, ' ');
 
 const quit = () => process.exit(0);
 
@@ -34,10 +42,13 @@ function readStdin() {
   }
 }
 
-function sessionDidWork(transcriptPath) {
+// One pass over the transcript: O(n) in its byte size, one regex test per user turn.
+// Transcripts reach a few MB; this stays well under the hook's budget.
+function sessionHasLesson(transcriptPath) {
   if (!transcriptPath || !fs.existsSync(transcriptPath)) return false;
-  let edits = 0;
   let assistantMsgs = 0;
+  let signal = false;
+
   for (const line of fs.readFileSync(transcriptPath, 'utf8').split('\n')) {
     if (!line.trim()) continue;
     let entry;
@@ -47,14 +58,30 @@ function sessionDidWork(transcriptPath) {
       continue;
     }
     const msg = entry.message;
-    if (!msg || msg.role !== 'assistant') continue;
-    assistantMsgs++;
-    const content = Array.isArray(msg.content) ? msg.content : [];
-    for (const block of content) {
-      if (block?.type === 'tool_use' && EDIT_TOOLS.has(block.name)) edits++;
+    if (!msg) continue;
+
+    if (msg.role === 'assistant') {
+      assistantMsgs++;
+      continue;
+    }
+    if (msg.role !== 'user' || signal) continue;
+
+    // Only what the human typed. Tool results arrive as user turns too, and a stderr
+    // dump containing "do not" is not Dhruv correcting anything.
+    const blocks = Array.isArray(msg.content)
+      ? msg.content.filter((b) => b?.type === 'text').map((b) => b.text)
+      : typeof msg.content === 'string'
+        ? [msg.content]
+        : [];
+    for (const text of blocks) {
+      if (text && LESSON_SIGNAL.test(stripInjected(text))) {
+        signal = true;
+        break;
+      }
     }
   }
-  return edits >= MIN_EDITS || assistantMsgs >= MIN_ASSISTANT_MSGS;
+
+  return signal && assistantMsgs >= MIN_ASSISTANT_MSGS;
 }
 
 const PROMPT = [
@@ -73,28 +100,6 @@ const PROMPT = [
   'nothing. Do not capture project-specific facts; those belong in the project CLAUDE.md.',
 ].join('\n');
 
-const GIT_TIMEOUT = 8000;
-
-const git = (args) =>
-  spawnSync('git', ['-C', CLAUDE_DIR, ...args], { timeout: GIT_TIMEOUT, encoding: 'utf8' });
-
-// Best-effort. Runs on both stop fires, so the second one picks up whatever the
-// `learn` skill just wrote. Never throws: a sync problem must not block a session.
-function syncCrewRepo() {
-  try {
-    if (!fs.existsSync(path.join(CLAUDE_DIR, '.git'))) return;
-    if ((git(['status', '--porcelain']).stdout || '').trim()) {
-      git(['add', '-A']);
-      // Safety net only. Real changes are committed one-per-change with their reason.
-      git(['commit', '-m', 'chore(crew): uncommitted session changes']);
-    }
-    if (!(git(['remote']).stdout || '').trim()) return; // no remote configured yet
-    git(['push', '--quiet']);
-  } catch {
-    /* ignore */
-  }
-}
-
 function main() {
   let input = {};
   try {
@@ -102,8 +107,6 @@ function main() {
   } catch {
     quit();
   }
-
-  syncCrewRepo();
 
   // Never loop: if we already blocked this stop, let it end.
   if (input.stop_hook_active) quit();
@@ -115,7 +118,7 @@ function main() {
   const marker = path.join(STATE_DIR, `${String(sessionId).replace(/[^\w.-]/g, '_')}.done`);
   if (fs.existsSync(marker)) quit();
 
-  if (!sessionDidWork(input.transcript_path)) quit();
+  if (!sessionHasLesson(input.transcript_path)) quit();
 
   fs.writeFileSync(marker, new Date().toISOString());
 
