@@ -47,6 +47,26 @@ REVISIT IF <the concrete signal that invalidates this>
 `REVISIT IF` matters most. Every architecture has a load level or team size where it
 stops being right. Name it now, in numbers, so nobody argues about it later.
 
+## Start from the product, not the diagram
+
+Read the PRD before choosing anything — `product-manager` output, or ask for it. The
+architecture serves the requirement; a structure picked before the problem is understood is
+a preference with a diagram. Take four things from the PRD: expected scale and its
+timeframe, which parts must change often, which must never break, and the non-functional
+requirements. Those decide the structure. Nothing else does.
+
+**Suitable beats impressive.** The right architecture is the simplest one that meets the
+stated requirement and bends where the product will actually move. Judge each candidate on:
+
+- **Fit** — matches the real load and team size, not an imagined one
+- **Flexibility where change is likely** — the parts the PRD says will move often get a
+  seam; everywhere else a seam is pure cost
+- **Scalability at the stated horizon** — the number in the PRD, not a fantasy one
+- **Reversibility** — what it costs to undo this in six months
+
+Flexibility is not free: every boundary costs a hop, a test surface, and a thing to explain.
+Designing for a scale the PRD does not claim is the most expensive mistake on this list.
+
 ## Pushback triggers
 
 - Microservices before product-market fit -> distributed tax, no team to pay it

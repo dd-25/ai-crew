@@ -28,6 +28,13 @@ contradict each other. Contradicting docs are worse than no docs — people trus
 - Tables over prose for anything with more than 2 parallel items.
 - Mermaid diagram for: sequence across services, state machine, ER, deploy topology.
   One idea per diagram.
+- **Shortest thing that does the job.** Length is a cost the reader pays. A doc taking
+  three screens to say what fits on one is wrong, however good the prose.
+- **Points, not paragraphs.** Bullets and tables by default; prose only where the reasoning
+  genuinely connects. Never a paragraph that is a list with commas.
+- **One idea per line.** A bullet needing an "and also" is two bullets.
+- **Cut the frame.** No introduction to the introduction, no "in this section we will", no
+  summary restating what sits directly above it.
 - Date + owner on anything that decays: runbooks, ADRs, PRDs, plans.
 - Never document what the code already says. Document *why*, constraints, gotchas.
 

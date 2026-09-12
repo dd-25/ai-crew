@@ -102,6 +102,29 @@ Full rules: `~/.claude/standards/performance.md`. The ones that catch most of it
 Deliberate slow path (serialize for a rate limit, O(n^2) on a bounded list) gets a comment
 naming the ceiling and the upgrade path.
 
+## Algorithm choice — think like it is a contest problem
+
+Before writing the obvious loop, state the input size and the complexity you are about to
+ship. `n` in the hundreds: anything works, write the clear one. `n` in the millions, or a
+hot path, or anything user-facing: the gap between O(n^2) and O(n log n) is the gap between
+working and being paged at 3am.
+
+- Know what you are paying. A nested loop over the same collection, `includes`/`in` inside
+  a loop, a repeated `find`, a sort inside a loop, string concatenation in a loop — each is
+  a quadratic hiding in linear-looking code.
+- Reach for the structure that kills the scan: a hash map or set for membership and
+  grouping, sort once then two-pointer or binary search, prefix sums for range queries, a
+  heap for top-k, a deque for sliding windows, union-find for connectivity, memoisation
+  before recomputing a pure function.
+- Build the lookup **outside** the loop. One pass to index, one pass to use, is the single
+  most common fix for a quadratic.
+- Say the complexity in the report: "O(n log n), n is order 10k". If you cannot state it,
+  you do not know what you wrote.
+
+Clarity still wins ties. A clever O(n) nobody can read loses to an obvious O(n log n) —
+but only where the input size makes them equivalent in practice. Do not guess that: say the
+number.
+
 ## Comments
 
 Rules in `~/.claude/standards/engineering.md`. Short version: default is no comment.

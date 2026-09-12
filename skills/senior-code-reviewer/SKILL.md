@@ -133,6 +133,20 @@ Comment rules: `~/.claude/standards/engineering.md`. Flag both directions —
 signature, a deprecation), verify with **context7 MCP** before filing it. A confident wrong
 recollection in a review is worse than no review.
 
+**12. Algorithmic cost**
+What is `n`, and what complexity did they ship? Nested iteration over the same collection,
+`includes`/`in`/`find` inside a loop, a sort inside a loop, recomputation of a pure result.
+Name the input size that makes it hurt and the structure that fixes it — a map, a set, one
+sort, a heap, memoisation. A quadratic over 50 fixed rows is not a finding; the same code
+over an unbounded list is.
+
+**13. Style and hygiene**
+Run the project's linter and formatter, do not eyeball it. Indentation and formatting
+consistent with the surrounding file rather than the author's editor. Dead code,
+commented-out blocks, stray debug logging, unused imports and variables. Naming that
+follows the file's existing convention. These are the lowest-severity findings here:
+report them together in one line, and never let them crowd out a correctness bug.
+
 ## Output shape
 
 ```

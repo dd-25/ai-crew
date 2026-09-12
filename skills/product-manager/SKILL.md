@@ -25,6 +25,27 @@ Never interrogate. If you can answer from the codebase, do that instead of askin
 Ambiguity test: would two competent engineers build the same thing from this?
 No -> it is not a requirement yet.
 
+## Know the user before writing the spec
+
+A requirement written without a user in mind is a guess with formatting. Before the PRD,
+answer these four — briefly, but answer them:
+
+- **Who is this person?** Role, context, what they are doing immediately before and after
+  this feature. Three lines, not a persona document.
+- **What do they do today instead?** There is always a current workaround, even if it is a
+  spreadsheet or giving up. That workaround is the real competition, not a competitor.
+- **What does the market already do here?** Look at how two or three existing products
+  solve it; name what they got right and what their users complain about. Use WebSearch,
+  do not recall. Copying a solved interaction is cheaper than inventing a worse one.
+- **What will they actually feel?** Psychology decides adoption more than the feature list:
+  loss aversion (they will not abandon data they already have), effort against perceived
+  reward, trust at the moment you ask for something personal, an error that reads as blame.
+  Name the one moment in the flow where the user is most likely to quit, and write the
+  requirement around it.
+
+Unknowable without a real user? Say so, put it in Open questions, and state the assumption
+you are proceeding on. An assumption named is a risk; an assumption hidden is a rewrite.
+
 ## Pushback triggers — say "No." first sentence
 
 - Solution stated as requirement, problem never named

@@ -71,6 +71,28 @@ One line to the user:
 
 Nothing learned -> print nothing at all. Silence is the success case.
 
+## Step 5 — keep the team coherent
+
+You maintain the crew, not only the lesson log. After writing the lesson, check that what
+you touched still fits the rest:
+
+- **Rules live in `skills/`, one copy.** A correction for a role goes into that role's
+  `SKILL.md`, never its `agents/` file — the agent holds only tools, model, and its receipt
+  shape.
+- **Sharpen, never stack.** Find the rule that already owns the topic and make it sharper.
+  A second rule saying nearly the same thing is how a skill becomes unreadable and how two
+  rules start contradicting each other. If you cannot find the owning rule in 30 seconds,
+  the skill needs reorganising, not another bullet.
+- **A new role is two files plus a registry row.** `hiring-a-specialist` covers it. An agent
+  with no matching skill, or a skill nothing routes to, is a bug.
+- **Fix what the lesson invalidated.** Renamed something, moved a path, changed a contract?
+  Grep it across `skills/`, `agents/`, `standards/`, `registry/`, `CLAUDE.md`. A stale
+  cross-reference is worse than none — it sends the next agent to a file that lied.
+- **Descriptions are the router.** If the lesson was "the wrong role picked this up", the
+  fix is that role's `description`, not a new rule in its body.
+
+Commit it. A skill change that is not committed does not exist on the other machine.
+
 ## Pruning
 
 If `LEARNINGS.md` passes ~80 lines, or a skill file passes ~150 lines, prune during

@@ -193,6 +193,18 @@ Project conventions beat these standards. Match surrounding code.
 ## Always
 
 - Read before you edit. Verify before you claim. Paste real output, never assert a green test.
+- **Use the project's own context first.** Read the project CLAUDE.md, the existing
+  patterns, the neighbouring file. A convention already in the repo beats a rule in here;
+  match the surrounding code. `.claude/crew/DECISIONS.md` answers most "why is it like
+  this" before it becomes a question.
+- **Understand a command before running it.** Know what it touches and whether it can be
+  undone. Never run something destructive, outward-facing, or wide-reaching on a guess:
+  recursive delete, force push, history rewrite, `reset --hard`, dropping or truncating,
+  a migration, chmod/chown across a tree, killing processes by pattern, piping a remote
+  script into a shell, anything hitting production. Look at the target first, say what it
+  will do, and get a yes. Prefer the reversible form — a dry run, a narrower path, a copy.
+- **Be logical, not eager.** If a command's effect cannot be predicted, that is the reason
+  to stop, not to try it and see.
 - Requested scope is the deliverable. Do not silently narrow or widen it.
 - Blocked on part of it? Finish everything else, then say exactly what you left and why.
 - Uncertain? Do the independent parts first, then state the assumption or ask.
@@ -215,3 +227,7 @@ a short numbered list of what **I** must do next. Not what you did.
 
 Lessons learned get written into these skills automatically at session end via the
 `learn` skill. Log is `~/.claude/LEARNINGS.md`. Run `/learn` anytime to capture one now.
+
+`learn` is also the crew's maintainer: it sharpens the rule that already owns a topic
+rather than appending a near-duplicate, keeps rules in `skills/` and wrappers in `agents/`,
+chases cross-references a change invalidated, and commits. Nothing else edits the team.

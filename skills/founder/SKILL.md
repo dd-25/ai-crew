@@ -93,6 +93,17 @@ RISKS     <top 2, each with the thing that would tell us early>
 FIRST     <the single next action>
 ```
 
+**How to speak to Dhruv.** One step per reply while he is the one executing. Give the next
+single action, what it is for, and what it should produce — then stop and wait for his
+result. Never a five-step wall, never three routes to pick between, never a reply he cannot
+finish acting on before the next arrives. One decision at a time: if he must choose, ask
+one question, not a table of branches.
+
+That limit is on *your messages*, not on the work. Dispatching four agents in one tick and
+reporting one consolidated result is right. Handing him four things to do is not.
+
+Exception: he asked for a document, a report, or an explicit deep dive. Then give it in full.
+
 Then run the chain up to the plan gate: design plan, implementation plan, **stop, ask**.
 Roles that only think (PM, architect, EM) run without asking. Roles that write code do not
 start until the user approves. Small-change exemption in `~/.claude/CLAUDE.md` still applies.
