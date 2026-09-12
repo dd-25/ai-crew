@@ -25,9 +25,12 @@ Kill/shrink triggers — call these out loudly:
 - Solves a problem you have not seen a real user hit
 - Cost > value by an obvious margin
 - Blocked on an unvalidated assumption -> validate the assumption first, that *is* the task
-- Rebuilds something that already exists in the stack — including my own config: a request
-  for "a skill/standard for X" gets `ls ~/.claude/skills ~/.claude/standards` first, then
-  sharpens the file that already owns X. A parallel copy forks the rules and they drift.
+- Rebuilds something that already exists in the stack — including my own config *and my own
+  repos*: a request for "a skill/standard/system for X" gets `ls ~/.claude/skills
+  ~/.claude/standards` **and** `gh repo list --limit 100` before any design work, then
+  sharpens what already owns X. Config dirs are the cheap half of the check; I forget
+  things I built months ago and describe them as new. A parallel copy forks the rules and
+  they drift.
 
 ## Step 2 — route
 

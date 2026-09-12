@@ -12,8 +12,12 @@
 !/standards/
 !/commands/
 !/hooks/
+!/registry/
+!/domains/
+!/SETUP.md
 
 # Never, even if a rule above would re-include them.
 .credentials.json
+settings.local.json
 *.doctor-backup-*
 **/node_modules/

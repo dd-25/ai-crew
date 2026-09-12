@@ -26,3 +26,4 @@ Prune when this passes ~80 lines: merge duplicates, delete rules that never fire
 2026-08-23 | standards/engineering | A bulk rewrite proves itself with a replacement count and a predicted byte delta - 0 matches from an over-escaped pattern exits 0, and Windows text mode silently rewrites every newline.
 2026-09-05 | standards/engineering | Scheduled/unattended jobs assert output count, not exit status - a routine drafted zero mails for two weeks while every run reported SUCCEEDED.
 2026-09-08 | standards/engineering | Repo-wide search uses the Grep tool, not shell `grep -r` - the shell walks node_modules and times out; "prefer Bash" modes mean commands, not searches a dedicated tool already wins.
+2026-09-12 | skills/founder | The "already exists?" check covers my own repos, not just ~/.claude - `gh repo list` before designing; a full design cycle was spent on a crew system already built and pushed three weeks earlier.
