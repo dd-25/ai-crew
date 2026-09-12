@@ -1,0 +1,19 @@
+# Allowlist: ignore everything at top level, then re-include what is portable.
+# Denylist would leak the next cache/credential file Claude Code invents.
+/*
+
+!/.gitignore
+!/README.md
+!/CLAUDE.md
+!/LEARNINGS.md
+!/settings.json
+!/agents/
+!/skills/
+!/standards/
+!/commands/
+!/hooks/
+
+# Never, even if a rule above would re-include them.
+.credentials.json
+*.doctor-backup-*
+**/node_modules/
