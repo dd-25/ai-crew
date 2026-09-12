@@ -15,7 +15,7 @@
           {
             "type": "command",
             "command": "node \"C:/Users/Dhruv Mundada/.claude/hooks/session-learn.mjs\"",
-            "timeout": 15
+            "timeout": 30
           }
         ]
       }

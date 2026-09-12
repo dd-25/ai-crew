@@ -7,10 +7,15 @@
  *  - honours stop_hook_active so it can never loop
  *  - one marker file per session id, so it fires at most once
  *  - any error exits 0 silently; a broken hook must never block a session
+ *
+ * Also syncs ~/.claude (the claude-crew repo): commits anything left uncommitted
+ * and pushes. Best-effort - no remote, no network or no auth leaves the commits
+ * waiting for the next session rather than failing the stop.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import { spawnSync } from 'node:child_process';
 
 const CLAUDE_DIR = path.join(os.homedir(), '.claude');
 const STATE_DIR = path.join(CLAUDE_DIR, '.learn-state');
@@ -68,6 +73,28 @@ const PROMPT = [
   'nothing. Do not capture project-specific facts; those belong in the project CLAUDE.md.',
 ].join('\n');
 
+const GIT_TIMEOUT = 8000;
+
+const git = (args) =>
+  spawnSync('git', ['-C', CLAUDE_DIR, ...args], { timeout: GIT_TIMEOUT, encoding: 'utf8' });
+
+// Best-effort. Runs on both stop fires, so the second one picks up whatever the
+// `learn` skill just wrote. Never throws: a sync problem must not block a session.
+function syncCrewRepo() {
+  try {
+    if (!fs.existsSync(path.join(CLAUDE_DIR, '.git'))) return;
+    if ((git(['status', '--porcelain']).stdout || '').trim()) {
+      git(['add', '-A']);
+      // Safety net only. Real changes are committed one-per-change with their reason.
+      git(['commit', '-m', 'chore(crew): uncommitted session changes']);
+    }
+    if (!(git(['remote']).stdout || '').trim()) return; // no remote configured yet
+    git(['push', '--quiet']);
+  } catch {
+    /* ignore */
+  }
+}
+
 function main() {
   let input = {};
   try {
@@ -75,6 +102,8 @@ function main() {
   } catch {
     quit();
   }
+
+  syncCrewRepo();
 
   // Never loop: if we already blocked this stop, let it end.
   if (input.stop_hook_active) quit();
