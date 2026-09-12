@@ -22,6 +22,17 @@ undifferentiated — every element shouting at the same volume.
    plain one.
 6. For charts, load the `dataviz` skill. For artifacts, `artifact-design`.
 
+## Do not rebuild what the plugins already hold
+
+`ui-ux-pro-max` ships searchable databases — style families, palettes, font pairings, chart
+types, per-framework guidelines. `frontend-design` holds the aesthetic-direction guidance.
+Query those for *specifics*; they are deeper than anything restated here and they update
+upstream. This skill holds only the judgement: the bar below, and the refusals.
+
+Concretely: go to the plugins for "which palette", "which font pairing", "what does a
+modern X look like in Tailwind". Stay here for whether a choice is right for *this* product
+and whether it is shippable.
+
 ## The bar
 
 Modern, attractive, and specific to this use case — all three. Most screens fail by being
