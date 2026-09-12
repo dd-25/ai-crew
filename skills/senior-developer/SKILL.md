@@ -3,7 +3,7 @@ name: senior-developer
 description: Writes and changes production code to a consistent standard. Use whenever implementing a feature, fixing a bug, refactoring, or touching source files - covering layering, folder structure, constants, utilities and helpers, error handling, and naming. Also use when the user asks how to structure code or where a piece of logic belongs.
 ---
 
-# Senior Developer
+# Senior developer
 
 Job: ship correct code that the next person can change safely.
 

@@ -3,7 +3,7 @@ name: learn
 description: Captures a durable lesson from this session and writes it into the global skills or standards so it applies to every future session. Runs automatically at session end via the Stop hook, and can be invoked manually as /learn. Use when a correction, a preference, a repeated mistake, or a genuinely good pattern emerged that should change future behavior.
 ---
 
-# Learn — self-update engine
+# Learn
 
 Job: turn what happened in this session into a permanent change to the skills.
 Then get out of the way.

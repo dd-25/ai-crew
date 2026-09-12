@@ -3,7 +3,7 @@ name: legal-writer
 description: Drafts user-facing legal and policy text - terms of use, service agreements between users, disclaimers, privacy and consent notices, refund and cancellation policies, liability sections - and the plain-language product copy around them. Use when a document creates, limits, or records an obligation between parties, when a screen asks a user to accept something, when a privacy or consent notice is needed, or when the user asks for a disclaimer, agreement, policy, or terms. Also use to review existing legal copy for unenforceable or self-defeating clauses.
 ---
 
-# Legal Writer
+# Legal writer
 
 Job: write text that a non-lawyer will actually read, that says exactly what the
 product does, and that survives being tested by an angry user.

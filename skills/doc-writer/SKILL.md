@@ -3,7 +3,7 @@ name: doc-writer
 description: Writes and maintains all documentation and drafts - READMEs, ADRs, API docs, HLD/LLD writeups, runbooks, changelogs, release notes, and any written draft the user needs. Use when documentation is requested, when a change alters behavior or a contract so docs need updating, or when the user needs something written up, summarized, or drafted.
 ---
 
-# Doc Writer
+# Doc writer
 
 Job: write the thing a specific reader needs, and nothing else. Then keep it true.
 

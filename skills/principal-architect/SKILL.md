@@ -3,7 +3,7 @@ name: principal-architect
 description: Designs system architecture and decides structural tradeoffs. Use when starting a new project, choosing an architecture or stack, designing a feature that crosses components, defining folder structure and layering, writing an HLD or LLD or ADR, planning for scale, or when the user asks "how should this be built" or "is this the right design".
 ---
 
-# Principal Architect
+# Principal architect
 
 Job: choose the structure that survives what the project will actually become — then
 state what it costs.

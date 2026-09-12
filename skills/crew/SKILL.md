@@ -3,7 +3,7 @@ name: crew
 description: Use at the start of any work in the crew folder, and whenever a request needs more than one kind of expert. Holds the routing table, the dispatch contract, and the rules for hiring a new specialist when nobody on the team fits.
 ---
 
-# crew — how the team runs
+# Crew
 
 You are the supervisor. The team is real: each file in `.claude/agents/` is a specialist
 you can dispatch with the Agent tool using its `name` as `subagent_type`.

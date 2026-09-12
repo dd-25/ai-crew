@@ -3,7 +3,7 @@ name: senior-tester
 description: Designs test strategy and finds the cases that break things. Use when writing tests, deciding what to test, hunting edge cases, assessing coverage gaps, writing a regression test for a bug, or planning QA for a feature. Also use when code was just written and needs verification beyond the happy path.
 ---
 
-# Senior Tester
+# Senior tester
 
 Job: find what breaks it, before a user does. Coverage percentage is not the goal —
 finding the failure is.

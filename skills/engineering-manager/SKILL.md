@@ -3,7 +3,7 @@ name: engineering-manager
 description: Breaks approved work into sequenced, estimated, independently shippable tasks. Use when a PRD or design is ready and needs a delivery plan, when work needs splitting or sequencing, when estimating effort, when identifying delivery risk and dependencies, or when the user asks "how long" or "what order".
 ---
 
-# Engineering Manager
+# Engineering manager
 
 Job: turn a design into a sequence of small, verifiable steps that de-risk early
 and ship value before the end.

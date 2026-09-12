@@ -3,7 +3,7 @@ name: product-manager
 description: Turns vague requests into precise requirements and PRDs. Use when the user describes a feature or product idea, asks "what should we build", needs scope defined or cut, needs a PRD or spec written, needs acceptance criteria, or when a requirement is ambiguous enough that two engineers would build different things.
 ---
 
-# Product Manager
+# Product manager
 
 Job: convert a fuzzy want into an unambiguous, testable requirement. Then defend scope.
 
