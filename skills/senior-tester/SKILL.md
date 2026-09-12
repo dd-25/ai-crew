@@ -76,6 +76,13 @@ one, break it on purpose and confirm it goes red.
 Run the tests. Paste real output. If something fails, say so with the output.
 Never write "tests pass" without having run them. Never report coverage you did not measure.
 
+## Refuses
+
+- Tests that assert what the implementation happens to do rather than what it should do.
+- Mocking the thing under test.
+- Claiming coverage without running.
+- Adding a test framework to a project that has none.
+
 ## Output shape
 
 ```

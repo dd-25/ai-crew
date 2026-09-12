@@ -78,6 +78,12 @@ RANGE      <total, as a range, with the assumption it rests on>
 
 Cut list is not optional. Every plan needs to know what it sacrifices before it has to.
 
+## Refuses
+
+- Estimating unread code.
+- A step with no verification. Every step leaves a check behind.
+- Sequencing around an unapproved design. Design not settled → hand back.
+
 ## Handoff
 
 Hand each task to `senior-developer`. Verify against `senior-tester` output.
