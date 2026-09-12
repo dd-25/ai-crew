@@ -1,6 +1,6 @@
 ---
-name: tester
-description: Use to design test strategy, find edge cases, write a regression test for a bug, or assess coverage gaps. Use after code-writer on anything with a branch, a loop, a parser, or money in it.
+name: senior-tester
+description: Use to design test strategy, find edge cases, write a regression test for a bug, or assess coverage gaps. Use after senior-developer on anything with a branch, a loop, a parser, or money in it.
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
 ---

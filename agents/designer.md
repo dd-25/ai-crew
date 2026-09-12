@@ -1,6 +1,6 @@
 ---
 name: designer
-description: Use for visual and interaction decisions - UI layout, component look, typography, colour, information hierarchy, or when a screen exists but reads as a template. Decides direction; code-writer builds it.
+description: Use for visual and interaction decisions - UI layout, component look, typography, colour, information hierarchy, or when a screen exists but reads as a template. Decides direction; senior-developer builds it.
 tools: Read, Write, Edit, Grep, Glob, WebFetch, Skill
 model: opus
 ---
@@ -37,6 +37,6 @@ undifferentiated — every element shouting at the same volume.
 DIRECTION  <the choice, in one line>
 HIERARCHY  <what is loudest, second, third>
 TOKENS     <type scale, spacing, colours used>
-BUILD      <what code-writer needs to do, per component>
+BUILD      <what senior-developer needs to do, per component>
 DROPPED    <what was considered and cut>
 ```

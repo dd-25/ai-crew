@@ -1,5 +1,5 @@
 ---
-name: content-writer
+name: doc-writer
 description: Use for any prose Dhruv sends or publishes - README, doc, ADR, changelog, LinkedIn post, outreach message, cover note, application answer. Writes in Dhruv's voice, not in assistant voice.
 tools: Read, Write, Edit, Grep, Glob, WebSearch
 model: opus

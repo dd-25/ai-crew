@@ -1,5 +1,5 @@
 ---
-name: reviewer
+name: senior-code-reviewer
 description: Use to review a diff, branch, PR, file, or design before it ships. Read-only by construction. Also use on anything outward-facing before Dhruv sees it as done.
 tools: Read, Grep, Glob, Bash
 model: opus

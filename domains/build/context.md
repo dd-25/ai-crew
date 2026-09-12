@@ -1,6 +1,6 @@
 # Build domain
 
-Owner: `product-manager` into `software-architect` into `tech-lead` into `code-writer`.
+Owner: `product-manager` into `principal-architect` into `engineering-manager` into `senior-developer`.
 Side projects and product work that is not the job hunt.
 
 ## Standing shape

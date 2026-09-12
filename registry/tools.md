@@ -28,7 +28,7 @@ good at: API shapes that changed after the knowledge cutoff
 costs: none
 risk: none
 verified: in standing use
-who uses it: code-writer, software-architect
+who uses it: senior-developer, principal-architect
 
 ## Rejected
 

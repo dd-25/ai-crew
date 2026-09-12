@@ -1,6 +1,6 @@
 ---
-name: tech-lead
-description: Use when an approved design needs to become ordered work - breaking it into steps, sequencing, estimating, spotting delivery risk, or answering "how long" and "what order". Runs after architect, before code-writer.
+name: engineering-manager
+description: Use when an approved design needs to become ordered work - breaking it into steps, sequencing, estimating, spotting delivery risk, or answering "how long" and "what order". Runs after architect, before senior-developer.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

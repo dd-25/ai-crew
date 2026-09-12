@@ -1,5 +1,5 @@
 ---
-name: code-writer
+name: senior-developer
 description: Use to write or change production code - features, bug fixes, refactors, scripts. Expects a settled design and an ordered step. Leaves a runnable check behind. Does not review its own work.
 tools: Read, Write, Edit, Grep, Glob, Bash, Skill
 model: opus

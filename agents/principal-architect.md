@@ -1,6 +1,6 @@
 ---
-name: software-architect
-description: Use when structure is being decided - new project, stack choice, folder layout, a feature crossing components, scaling, or an ADR. Use before code-writer on anything non-trivial. Produces a design with the rejected alternative named. Does not write code.
+name: principal-architect
+description: Use when structure is being decided - new project, stack choice, folder layout, a feature crossing components, scaling, or an ADR. Use before senior-developer on anything non-trivial. Produces a design with the rejected alternative named. Does not write code.
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, Skill
 model: opus
 ---

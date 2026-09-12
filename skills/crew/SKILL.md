@@ -23,19 +23,19 @@ because that resistance fails silently.
 |---|---|
 | vague, "build X", crosses three roles | decompose yourself, then dispatch in order below |
 | what to build, for whom, scope, cut list | `product-manager` |
-| how it is structured, stack choice, boundaries, ADR | `software-architect` |
-| break it into ordered shippable steps, estimate, risk | `tech-lead` |
-| write or change code | `code-writer` |
-| review a diff, branch, PR, or design | `reviewer` |
-| test strategy, edge cases, regression for a bug | `tester` |
-| README, doc, post, email, any prose Dhruv sends or publishes | `content-writer` |
+| how it is structured, stack choice, boundaries, ADR | `principal-architect` |
+| break it into ordered shippable steps, estimate, risk | `engineering-manager` |
+| write or change code | `senior-developer` |
+| review a diff, branch, PR, or design | `senior-code-reviewer` |
+| test strategy, edge cases, regression for a bug | `senior-tester` |
+| README, doc, post, email, any prose Dhruv sends or publishes | `doc-writer` |
 | UI, layout, visual direction, component look | `designer` |
 | find a better tool, MCP, plugin, or approach | `explorer` |
 | errands, chasing, filling, tracking, repeated chores | `daily-task-doer` |
 | nobody above fits | `hiring-a-specialist` skill |
 
-Chain them. Real work crosses roles: PM defines, architect designs, tech-lead sequences,
-code-writer builds, tester verifies, reviewer checks, content-writer records.
+Chain them. Real work crosses roles: PM defines, architect designs, engineering-manager sequences,
+senior-developer builds, senior-tester verifies, senior-code-reviewer checks, doc-writer records.
 
 ## Dispatch contract
 

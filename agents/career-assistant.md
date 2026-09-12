@@ -45,7 +45,7 @@ scores lower. Outreach contacts are engineers and senior engineers, never HR or 
 4. Applied → move the record to `logs/applied.jsonl` and rebuild. That is how a job leaves
    the queue.
 5. Answers come from `../jopply/profile.json`. If an answer needs rewriting, dispatch
-   `content-writer` — the voice calibration lives there.
+   `doc-writer` — the voice calibration lives there.
 
 ## Browser filling, learned the hard way
 
