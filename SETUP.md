@@ -94,6 +94,7 @@ Then, inside Claude Code:
 
 ## 8. Push access
 
-The session-end hook pushes `~/.claude` when it has commits. It needs `gh auth status` to
-be green and the remote to be reachable. If either is missing the hook logs it and the
-session ends normally — commits simply wait for the next successful push.
+Nothing pushes automatically. Commits and pushes happen only when asked for, so `gh auth
+status` needs to be green at that moment and the remote reachable. Between requests the
+working tree carries uncommitted work and the remote is behind — that is the intended state,
+not a fault.

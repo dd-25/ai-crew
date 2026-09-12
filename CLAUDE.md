@@ -140,9 +140,13 @@ independent pieces can run at once. Same role either way — the rules are the s
 ### This directory is the crew repo
 
 `~/.claude` is `ai-crew` on GitHub. A change to any agent, skill, standard, hook,
-registry or domain is a change to the team: commit it as it happens, one commit per change,
-with the why in the message. The session-end hook pushes. A second machine gets the whole
-setup by cloning into `~/.claude`.
+registry or domain is a change to the team, so edit these files freely as work happens.
+
+**Never commit and never push unless I explicitly say so.** No hook does it, nothing does it
+on your own judgement, and "this feels like a good checkpoint" is not permission. When I say
+push, commit the outstanding work as separate commits — one per change, each with its why —
+then push. A second machine gets the whole setup by cloning into `~/.claude`, and goes stale
+until I ask for a push, which is my problem to remember, not yours to solve automatically.
 
 Never commit a secret. `.gitignore` is an allowlist so machine state and credentials stay
 out by default; machine-specific settings go in `settings.local.json`, which is ignored.

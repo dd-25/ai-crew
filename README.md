@@ -74,5 +74,6 @@ cache file Claude Code invents does not leak by default.
 ## Keeping it current
 
 A change to an agent, skill, standard, hook, registry or domain is a change to the team, so
-it gets its own commit as it happens. The session-end hook pushes. Another machine runs
-`git pull` in `~/.claude`.
+the files are edited as work happens — but nothing commits or pushes on its own. Commits and
+pushes are explicit, on request only: one commit per change, each carrying its reason. Another
+machine runs `git pull` in `~/.claude` and is stale until then, deliberately.

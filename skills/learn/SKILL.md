@@ -25,6 +25,13 @@ Extract a lesson ONLY if one of these actually happened:
 **No trigger -> write nothing. Say nothing. Exit.** This is the normal outcome and it is
 correct. A skill file that grows every session becomes noise and stops being read.
 
+**Durability test — a trigger alone is not enough.** Before writing, the lesson must pass
+all three: it would change behaviour in a *different* project, it is not already implied by
+a rule in the files, and it is specific enough to act on. "Be more careful" fails all three.
+Fails any one -> write nothing. The Stop hook now fires only on a real correction or a
+stated preference, so the material reaching you is already filtered; thin material here
+means there was no lesson, not that you should find one.
+
 Do NOT capture:
 - Project-specific facts (those belong in the project's CLAUDE.md, not global skills)
 - One-off details with no future relevance
@@ -71,6 +78,21 @@ One line to the user:
 
 Nothing learned -> print nothing at all. Silence is the success case.
 
+## Push back on the lesson itself
+
+A lesson can pass every trigger and still be worth refusing:
+
+- It would make the skill worse — longer, vaguer, or contradicting a rule already there.
+  A skill nobody finishes reading enforces nothing.
+- It generalises one incident into a standing rule. One bad outcome is not a pattern, and a
+  rule written from a single event usually fires on the wrong cases later.
+- It encodes a preference Dhruv stated while annoyed rather than one he holds. If it will
+  be reversed next week, writing it costs twice.
+- It belongs to a project, not to every future session. That goes in the project CLAUDE.md.
+
+Refusing is the normal outcome. Say in one line what you considered and why you did not
+write it — never silently skip, and never write a weak rule to have something to show.
+
 ## Step 5 — keep the team coherent
 
 You maintain the crew, not only the lesson log. After writing the lesson, check that what
@@ -95,7 +117,8 @@ Then run `bash ~/.claude/scripts/crew-doctor.sh`. It checks the invariants this 
 responsible for — agent/skill pairing, registry rows, frontmatter, stale paths — and is the
 only thing that catches a half-applied rename. Exit 0 before you commit.
 
-Commit it. A skill change that is not committed does not exist on the other machine.
+Leave it uncommitted. Say what changed in one line and stop. Dhruv commits and pushes on
+his own word — never on yours, and never because the change looks finished.
 
 ## Pruning
 
