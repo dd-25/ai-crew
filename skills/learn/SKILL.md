@@ -49,7 +49,9 @@ Edit the real file. Do not create new files. Do not append a growing "lessons" s
 | architecture choice, tradeoffs | `~/.claude/standards/architecture.md` |
 | doc structure, sections | `~/.claude/standards/docs.md` |
 | how a specific role behaves | that role's `~/.claude/skills/<role>/SKILL.md` |
-| routing between roles | `~/.claude/skills/founder/SKILL.md` |
+| which single role picks up a request | `~/.claude/CLAUDE.md`, "Problem → first responder" (or that role's `description`) |
+| which chain of roles runs | `~/.claude/skills/founder/SKILL.md` |
+| how a prompt file is written | `~/.claude/standards/prompting.md` |
 | always-on rule | `~/.claude/CLAUDE.md` (only if truly always-on — it costs context every session) |
 
 **Edit in place.** Sharpen an existing rule, correct a wrong one, or add one line to the
@@ -115,7 +117,7 @@ you touched still fits the rest:
 
 Then run `bash ~/.claude/scripts/crew-doctor.sh`. It checks the invariants this step is
 responsible for — agent/skill pairing, registry rows, frontmatter, stale paths — and is the
-only thing that catches a half-applied rename. Exit 0 before you commit.
+only thing that catches a half-applied rename. Exit 0 before you report.
 
 Leave it uncommitted. Say what changed in one line and stop. Dhruv commits and pushes on
 his own word — never on yours, and never because the change looks finished.

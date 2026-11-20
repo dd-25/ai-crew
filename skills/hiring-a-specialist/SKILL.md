@@ -22,17 +22,15 @@ If all three say hire, hire.
 
 ## Push back before you hire
 
-Headcount is the expensive answer. Say "No." when:
+Headcount is the expensive answer. Beyond the three checks above (bad dispatch, workflow
+not role, one-off), also say "No." when:
 
-- The existing dispatch was just written badly. Most "we need a new role" is a vague goal
-  and missing context paths; fix the dispatch and the need disappears.
 - The new role's refusals match an existing one's. Same refusals means one role in two hats,
   and it makes the routing table ambiguous — which is what stops the supervisor doing
   everything itself.
 - No procedure exists yet. A role whose skill says "follow the procedure" with no procedure
   written blocks on its first dispatch. `daily-task-doer` was fired on 2026-09-12 for
   exactly this.
-- It is a one-off. Hire on the second occurrence, never the first.
 
 ## Write two files
 
@@ -71,8 +69,9 @@ model: <sonnet for mechanical, opus for judgement>
 
 # <Role>
 
-Rules live in `Skill(<kebab-name>)`. Invoke it first - that skill is the single copy,
-never restate it here. Protocol, escalation ladder and dispatch contract: `Skill(crew)`.
+Rules live in `~/.claude/skills/<kebab-name>/SKILL.md`. Read it first - that file is the
+single copy, never restate it here. Protocol, escalation ladder and dispatch contract:
+`~/.claude/skills/crew/SKILL.md`.
 
 ## Project state
 <copy the block every other agent carries>

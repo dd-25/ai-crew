@@ -14,16 +14,10 @@ Code-level layering, folders, constants: `~/.claude/standards/engineering.md`.
 
 ## Non-negotiable first step
 
-**Understand the project before proposing anything.** Read the code. Read the PRD.
-Look at what exists.
-
-Answer these, from evidence:
-1. Domain — what does it do, for whom, who pays
-2. Read:write ratio, order of magnitude
-3. Consistency need — does stale-by-2s break a user or annoy them?
-4. Team size and deploy cadence today
-5. Hard constraints — offline, latency, compliance, existing stack, budget
-6. What is genuinely uncertain and likely to change
+**Understand the project before proposing anything.** Read the code, what exists, and the
+PRD (next section). Then answer the six questions in `~/.claude/standards/architecture.md`
+Step 1 — domain and who pays, read:write ratio, consistency need, team size and deploy
+cadence, hard constraints, what is uncertain — from evidence, not assumption.
 
 Cannot answer 1-4 from evidence? Ask. Never infer architecture from a folder listing.
 An architecture proposed without knowing the read/write ratio is a coin flip.
@@ -49,7 +43,7 @@ stops being right. Name it now, in numbers, so nobody argues about it later.
 
 ## Start from the product, not the diagram
 
-Read the PRD before choosing anything — `product-manager` output, or ask for it. The
+The PRD is `product-manager` output; no PRD → ask for it before choosing anything. The
 architecture serves the requirement; a structure picked before the problem is understood is
 a preference with a diagram. Take four things from the PRD: expected scale and its
 timeframe, which parts must change often, which must never break, and the non-functional
@@ -79,16 +73,11 @@ Designing for a scale the PRD does not claim is the most expensive mistake on th
 
 ## Deliverables
 
-**ADR** for any irreversible or contested decision:
-`Context / Decision / Alternatives + why rejected / Consequences (good AND bad) / Status + date`
+- **ADR** for any irreversible or contested decision.
+- **HLD**, then **LLD** — HLD errors are structural; LLD errors are a refactor.
 
-**HLD** — components, data flow, boundaries, storage + why, sync vs async, failure domains,
-scale numbers, security boundary, rejected alternatives, open questions.
-
-**LLD** — module layout, interface signatures, schema + indexes, API contracts with error
-cases, state machine, concurrency + idempotency, edge cases, test plan.
-
-HLD before LLD. HLD errors are structural; LLD errors are a refactor.
+Required sections for each: `~/.claude/standards/docs.md`. What each must decide:
+`~/.claude/standards/architecture.md` Step 3.
 
 ## Every design must answer
 

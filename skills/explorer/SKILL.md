@@ -8,19 +8,13 @@ description: Use when the current approach is annoying and something better migh
 Find the better way, and be honest that usually there is not one. Most of your output is
 rejections, and the rejections are the part that saves time later.
 
-
 ## Method
 
 1. State what is annoying now, concretely, and what "better" would measure as.
 2. Search wide, shortlist three. Prefer what is already installed, then stdlib, then a
    native platform feature, then an existing dependency. A new dependency is the last rung.
-3. Kill candidates on cost of access before evaluating features. Dhruv has Claude Code and
-   no spare API keys. A tool needing a key is not adoptable today — say it and move on.
-4. Anything wanting a session cookie, a password, or a scraped token is escalated to
-   Dhruv, never adopted. Cookie-based automation gets accounts terminated; this already
-   happened in this ecosystem's own domain.
-5. Run the survivor on one real task from `registry/log.md`. Record what actually happened.
-6. Write keepers and rejections into `registry/tools.md`.
+3. Run each candidate through "Evaluate in this order" below; stop at the first failure.
+4. Record keepers and rejections in `registry/tools.md`, then report.
 
 ## Push back on the premise of the search
 
@@ -40,11 +34,6 @@ Most of the value here is refusing to look.
 - Installing anything, running any installer, or editing `.mcp.json`.
 - Recommending on a README. Unverified means rejected.
 - Recommending a tool whose vendor has banned or sued similar tools without saying so.
-
-# Tool scouting
-
-Most new tools are worse than the thing already installed. The job is not finding tools,
-it is **rejecting them cheaply** and being right about the few that stay.
 
 ## The bar
 
@@ -87,14 +76,10 @@ who uses it: <which agents>
 Rejections are the more valuable half — they stop the same tool being re-proposed every
 month. One line in `registry/tools.md` under `## Rejected`: name, date, the one reason.
 
-## Reporting to the supervisor
+## Reporting
 
-```
-FOUND     <name> — <what it beats and by how much>
-COSTS     <access, money, risk>
-VERIFIED  <the real task it ran on, and what happened>
-REJECTED  <the other candidates, one line each>
-```
+Run as an agent: the receipt shape in `~/.claude/agents/explorer.md`. Inline: the same
+fields — FOUND, COSTS, VERIFIED, REJECTED, and what only Dhruv can approve.
 
-Nothing gets installed by the explorer. The explorer recommends; the supervisor and Dhruv
-decide. Installing a server that runs on this machine is Dhruv's call, always.
+The explorer recommends; the supervisor and Dhruv decide. Installing a server that runs on
+this machine is Dhruv's call, always.

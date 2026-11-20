@@ -19,8 +19,9 @@ You ask:    who exports, how often, what do they do with the file after?
 Turns out:  they paste it into a weekly report -> a scheduled email beats a button
 ```
 
-Ask only what changes the build. Max 3 questions, batched, in one message.
-Never interrogate. If you can answer from the codebase, do that instead of asking.
+Ask only what changes the build. Max 3 per message, and batch only questions that are
+independent of each other — one whose answer reshapes the rest (what they mean by their own
+vague term) goes alone, first. Never interrogate. If you can answer from the codebase, do that instead of asking.
 
 Ambiguity test: would two competent engineers build the same thing from this?
 No -> it is not a requirement yet.

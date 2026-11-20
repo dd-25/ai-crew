@@ -18,8 +18,8 @@ An agent that only dispatches other agents burns a full context window to pass m
 You already hold the conversation, Dhruv's correction history, and what was tried an hour
 ago. The specialists are cheap and disposable; the thread is not. So the thread supervises.
 
-Cost of this: you must resist doing the work yourself. Rule 1 in `CLAUDE.md` exists
-because that resistance fails silently.
+Cost of this: you must resist doing the work yourself. "Route, don't do" in `CLAUDE.md`
+exists because that resistance fails silently.
 
 ## Routing table
 
@@ -33,12 +33,14 @@ single role; that one picks a sequence. Use `founder` when the work needs more t
 
 ## Dispatch contract
 
-Every dispatch carries these five things. A dispatch missing any of them comes back wrong
-and you pay for it twice.
+Every dispatch carries these six things — everything the agent cannot see, nothing more. A
+dispatch missing any of them comes back wrong and you pay for it twice.
 
-1. **Goal** — the outcome, not the activity.
-2. **Context paths** — files to read. Paths, never pasted contents.
-3. **Constraints** — what must not change, what is already decided, what was rejected and why.
+1. **Goal** — the outcome, not the activity, in Dhruv's words where he gave them.
+2. **Context paths** — files to read, repo facts. Paths, never pasted contents.
+3. **Constraints** — what must not change, what is already decided, what was rejected and
+   why, what is out of scope and who owns it. Large or open-ended task → the living-TODO rule
+   from `CLAUDE.md` goes in here.
 4. **Done means** — the check that proves it. A command, a file, an assertion.
 5. **Report back** — the shape you want, and a hard word budget.
 6. **Invite the objection** — say explicitly that a wrong premise or a better approach comes
@@ -133,7 +135,7 @@ Each tick:
 2. Any `to:<role>` question → dispatch that role with the question alone. Write the answer
    to `DECISIONS.md`, clear the entry.
 3. Otherwise take the highest task that is not BLOCKED or DONE. Dispatch its owner with the
-   five-field contract above.
+   dispatch contract above.
 4. Read the receipt. Run its check yourself — a receipt is a claim. Update `BOARD.md`,
    append one line to `registry/log.md`.
 5. Reviewer findings become new TODO rows, they do not silently pass.
@@ -169,11 +171,8 @@ value; then it escalates by the ladder above, and the answer fills the field and
 row to `DECISIONS.md`.
 
 **Never invent a value to close a gap.** UNSET is honest. A guessed stack or a guessed test
-command is a wrong decision that every later agent inherits as fact.
-
-Same rule for the machine: a missing `settings.local.json`, an unconfigured MCP, an absent
-API key degrade that one capability and say so. They never block a dispatch that does not
-need them.
+command is a wrong decision that every later agent inherits as fact. (Machine gaps — key,
+MCP, settings file — follow the same rule in `CLAUDE.md`.)
 
 ## Hiring
 
@@ -188,7 +187,8 @@ The team maintains itself. After a dispatch that taught something durable:
 
 - specialist got a correction that will recur → edit that role's `skills/<name>/SKILL.md`,
   in place. The agent file holds only tools, model and the receipt shape.
-- a tool proved out → `registry/tools.md`, with what it is good for and what it costs
+- a tool proved out → the explorer records it in `registry/tools.md`, with what it is good
+  for and what it costs
 - a new specialist was hired → `registry/agents.md`
 - every dispatch → one line in `registry/log.md`
 
@@ -197,13 +197,7 @@ a rewritten log is worth nothing.
 
 ## Repo sync
 
-`~/.claude` is the `ai-crew` repo. Any change to an agent, skill, standard, hook, the
-registry or a domain is a change to the team, so it gets committed as it happens — one
-so edit them freely as work happens. **Never commit and never push unless Dhruv explicitly
-says so** — not on a milestone, not at session end, not because the change looks finished.
-When he asks, commit the outstanding work one commit per change, each with its why, then push.
-
-Never commit a secret. The `.gitignore` is an allowlist for exactly this reason: machine
-state and credentials stay out by default, and only named paths travel. Machine-specific
-settings belong in `settings.local.json`, which is ignored. Setup a new machine needs but
-must not commit — API keys, MCP auth — is documented in `SETUP.md`, never pasted into it.
+`~/.claude` is the `ai-crew` repo; edit it freely as work happens. **Never commit and never
+push unless Dhruv explicitly says so** — not on a milestone, not at session end, not because
+the change looks finished. Commit shape, secrets and `SETUP.md`: `CLAUDE.md`, "This
+directory is the crew repo".

@@ -33,7 +33,8 @@ Read them before writing code in an unfamiliar area.
 6. **Failure path before happy path polish.** What does this do when the network dies?
 7. **Cost pass before done.** Walk your own diff against
    `~/.claude/standards/performance.md`. Cheapest at write time, most expensive after ship.
-8. **Verify.** Run it. Paste output. Never claim green.
+8. **Verify.** Run it once, at the end of the feature (Test cadence in `~/.claude/CLAUDE.md`).
+   Paste output. Never claim green.
 
 ## Bugs — root cause, not symptom
 
