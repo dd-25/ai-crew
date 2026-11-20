@@ -88,9 +88,11 @@ Config values (timeouts, page sizes, limits) come from validated config, not lit
 - No `any` at boundaries. Internal `any` is a TODO with a name on it.
 - Transactions belong in service, not repository — repository does not know how many
   writes make one business operation.
-- N+1: any loop containing `await db.*` is presumed a bug until justified.
-- Performance is a correctness concern, not a later pass — parallelism, query shape,
+- Performance is a correctness concern, not a later pass — N+1, parallelism, query shape,
   loop and I/O discipline: `~/.claude/standards/performance.md`.
+
+## Tool and command traps — each one cost a real session
+
 - **Install into a project env, never the shared interpreter.** `venv` / `nvm` / project
   lockfile first, before the first `pip install` or `npm i -g`. A global install silently
   upgrades a transitive pin and breaks a different project that was working an hour ago.
@@ -104,12 +106,26 @@ Config values (timeouts, page sizes, limits) come from validated config, not lit
   over-escaped pattern (backslash-heavy JSON paths through a shell heredoc) that never matched.
   A delta that is off by the line count means the tool rewrote every newline: on Windows,
   Python text mode turns LF into CRLF, so read and write with `newline=''` or in binary.
+- **Grepping a built artifact needs `-a`, and counting needs `grep -ao … | wc -l`.** Bundles,
+  minified JS, APK payloads and compiled output read as binary, so plain `grep` prints
+  "Binary file matches" and suppresses every hit — and `grep -c` then returns **1**, which
+  looks exactly like one real occurrence. That is how "this value never made it into the
+  build" gets asserted about a value that is sitting right there. `-c` counts matching
+  *lines* and a bundle is one line, so it cannot answer "how many times"; only `-o | wc -l`
+  does. Absence in a compiled artifact is weak evidence anyway: Hermes and other string
+  tables pack overlapping literals, so a string that is a prefix of another gets no separate
+  copy. Confirm against a known-good build before calling it a regression.
 - **Repo-wide search goes through the Grep tool, never `grep -r` in a shell.** A recursive
   shell grep walks `node_modules`, `.git` and build output; on a real project that is minutes,
   and it times out with nothing to show for it. The Grep tool is ripgrep — it honours ignore
   files and returns the same answer in seconds. This holds even when a mode says to prefer
   the shell: "prefer Bash" means for commands, not for a search a dedicated tool already wins.
   Shell `grep` is for one named file or a pipe you already have.
+- **Scope a count to what ships before reporting it.** A repo-wide red number misleads as
+  badly as a partial green one. Before reporting `npm audit` or any vulnerability count,
+  re-run it scoped to what actually ships (`--omit=dev -w <deployed-workspace>`). A monorepo
+  total mixes the build toolchain in with the server; 70 advisories collapsing to the 8 that
+  reach production is the difference between a launch blocker and noise.
 
 ## Naming
 
@@ -150,7 +166,8 @@ tags (git has them), commented-out code, `// constructor`, `// loop over users`.
 - [ ] Compiles / lints clean, no new warnings — and the script actually covers what you
       changed. Open the `lint`/`typecheck`/`test` scripts and read their scope before
       trusting a green exit. Partial scripts (one workspace of five, one glob of three)
-      return 0 while the code you touched was never checked.
+      return 0 while the code you touched was never checked. Red counts need scoping
+      too — see "Scope a count to what ships" above.
 - [ ] Tests written and passing — output pasted, not claimed
 - [ ] Anything scheduled or unattended asserts its **output count**, not its exit status.
       A run that finds nothing, matches nothing or writes nothing must fail loudly and

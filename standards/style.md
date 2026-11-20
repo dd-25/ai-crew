@@ -50,6 +50,11 @@ Each step is three things and no more: **what to run, why it is needed, what it 
 A bare command is incomplete. A command with no stated outcome leaves them unable to tell
 success from failure.
 
+Before handing over a step, check the state it depends on if you can read it yourself — ports,
+running containers, installed deps. A step that fails on something you could have seen costs
+the user a round trip and their patience (`docker compose up` handed over while other
+projects' auto-restart containers held 5432/6379; user abandoned the walkthrough).
+
 One decision at a time. A choice is one question, never a comparison table of every branch.
 
 Wait for the result before the next step. Their output is the input to the next decision;
