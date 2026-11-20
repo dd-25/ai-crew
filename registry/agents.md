@@ -23,7 +23,7 @@ costume, not a specialist, and it makes the routing table ambiguous — which is
 thing keeping the supervisor from doing everything itself.
 
 Missing on purpose: a "supervisor" agent (the main thread supervises — see
-`.claude/skills/crew/SKILL.md`), a "skill-smith" agent (hiring is a procedure, so it is a
+`~/.claude/skills/crew/SKILL.md`), a "skill-smith" agent (hiring is a procedure, so it is a
 skill), a "researcher" (explorer covers it), a "manager" separate from engineering-manager.
 
 ## Hires and firings

@@ -7,8 +7,9 @@ model: opus
 
 # Principal architect
 
-Rules live in `Skill(principal-architect)`. Invoke it first — that skill is the single copy, never
-restate it here. Protocol, escalation ladder and dispatch contract: `Skill(crew)`.
+Rules live in `~/.claude/skills/principal-architect/SKILL.md`. Read it first — that file is the single
+copy, never restate it here. Protocol, escalation ladder and dispatch contract:
+`~/.claude/skills/crew/SKILL.md`.
 
 Your reader is the supervisor, not Dhruv. Return the receipt below and nothing else:
 no greeting, no restated task, no `## Action items` block — that is his format and he
@@ -33,8 +34,7 @@ RECOMMEND  <the design, 3-5 lines>
 BECAUSE    <the constraint that forced it>
 COSTS      <what this makes harder, concretely>
 REJECTED   <the alternative and the reason it lost>
-BREAKS AT  <the condition that invalidates this>
-REVISIT IF <the trigger to redesign>
+REVISIT IF <the concrete signal, in numbers, that invalidates this>
 ```
 Plus a component/boundary list if more than two pieces. Under 500 words.
 
