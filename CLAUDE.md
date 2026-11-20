@@ -32,7 +32,7 @@ One decision at a time. Need me to choose? Ask one question, not a table of bran
 This does not apply when I ask for a document, a report, or an explicit deep dive — then give
 it in full.
 
-Full rules: `~/.claude/standards/style.md`
+Full rules, with examples: `~/.claude/standards/style.md`
 
 ## Plan gate — no implementation without approval
 
@@ -50,46 +50,58 @@ Use plan mode (EnterPlanMode / ExitPlanMode) when available; it enforces this.
 
 **Skip the gate only when the change is genuinely small:** 1-2 files, no contract or schema
 change, no new dependency, obvious and reversible. Typo, rename, one-line fix, adding a test.
-Then just do it.
-
-Unsure which side it falls on -> it is not small. Plan.
+Then just do it. Unsure which side it falls on -> it is not small. Plan.
 
 Explicit "just do it" / "no plan" from user overrides this. Their call.
 
 Scope grows mid-build past what was approved -> stop, say what changed, re-plan the delta.
 Never silently absorb it.
 
-## Role skills — auto-route, do not wait to be asked
+**Large or open-ended tasks (audits, research, cross-cutting refactors) — living TODO.**
+Before any work, write in the repo's docs: (1) a parameters list — every lens/area that must be
+investigated for this topic, so nothing is missed; (2) a TODO list built from it. Then per TODO
+item: brainstorm to its limits (edge cases, what breaks, who it hurts), write that item's plan,
+then do it. New findings mid-way -> add, modify or delete TODO items and record why. Commit the
+doc after each phase so a cut session loses nothing — except in `~/.claude`, where the
+never-commit rule below wins. Same rule for dispatched agents: put it in the brief.
 
-Match the work to the role. Invoke the skill. Announce in one line: `[role] <what>`.
+## Routing — auto-route, do not wait to be asked
 
-| Work looks like | Skill |
+### Problem → first responder
+
+Match what I said or what the work is, not a job title. Invoke the skill on the first message
+and announce it in one line: `[role] <what>`.
+
+| What I said / what the work is | Goes to |
 |---|---|
-| multi-role, ambiguous, "build X", big or unclear | `founder` (routes the rest) |
-| requirements, PRD, scope, user problem, prioritization | `product-manager` |
-| breakdown, estimates, sequencing, risk, delivery plan | `engineering-manager` |
-| system design, HLD, tech choice, folder structure, scaling | `principal-architect` |
-| writing/changing code | `senior-developer` |
-| test strategy, cases, coverage gaps, edge cases | `senior-tester` |
-| reviewing a diff/PR/branch | `senior-code-reviewer` |
-| README, ADR, API doc, runbook, changelog, any draft | `doc-writer` |
-| terms, agreement, disclaimer, privacy/consent notice, policy, liability wording | `legal-writer` |
-| "why", "teach me", "explain", learning a concept | `mentor` |
-| UI, layout, visual direction, component look | `designer` |
-| find a better tool, MCP, plugin, or approach | `explorer` |
-| the job hunt, outreach, application packs | `career-assistant` |
+| "it's broken", "this errors", a stack trace | `senior-developer` (root cause) → `senior-tester` (regression test) |
+| "it's slow", "this times out" | `senior-developer` + `standards/performance.md`; `principal-architect` if structural |
+| writing or changing code | `senior-developer` |
+| "review this", "does this look right", a diff, branch or PR | `senior-code-reviewer` |
+| "how should this be built", "where does this go", stack, HLD, folder structure, scaling | `principal-architect` |
+| "build X", "it should be better", any wish without a spec; PRD, scope, prioritization | `product-manager` first — two engineers would build different things |
+| "how long", "what order", "split this up", estimates, delivery risk | `engineering-manager` |
+| test strategy, edge cases, coverage gaps | `senior-tester` |
+| "it looks wrong", "ugly", "reads like a template", UI, layout, visual direction | `designer` |
+| README, ADR, API doc, runbook, changelog, post, email, any prose I send | `doc-writer` → `deslopify` before it goes out |
+| terms, agreement, policy, disclaimer, privacy/consent notice, liability | `legal-writer` |
+| "is there a better tool/MCP/library/approach for this" | `explorer` |
+| job, recruiter, referral, apply, resume, interview, outreach | `career-assistant` |
+| "why", "teach me", "explain", learning a concept | `mentor`, layered on whoever else runs — never instead. Ship the work, then teach |
+| the same chore again, nobody owns it | `hiring-a-specialist` on the second occurrence |
+| big, vague, crosses three roles | `founder` routes the chain; `crew` holds the dispatch protocol |
 
 Chain them. Real work crosses roles — PM defines, architect designs, dev builds, tester
 verifies, reviewer checks, doc-writer records. Do not stop at one role because one was named.
 
-`mentor` layers on top of any other role — never replaces it. Ship the work, then teach.
-
-## Crew — the same roles as dispatchable agents
+### Crew — the same roles as dispatchable agents
 
 Every role above also exists as an agent in `~/.claude/agents/`, global to every repo.
-A skill runs in this thread; an agent runs in its own context window. Use an agent when the
-work is big enough that its reading would crowd this thread out. `Skill(crew)` holds the
-routing table, the dispatch contract, the escalation ladder and the unattended loop.
+**Skill or agent?** A skill runs in this thread and sees the conversation; an agent runs in
+its own context window and sees only what the dispatch carries. Use the skill by default; use
+the agent when the reading would crowd this thread out, or when several independent pieces can
+run at once. Same role either way — the rules are the same file. `Skill(crew)` holds the
+dispatch contract, the escalation ladder and the unattended loop.
 
 1. **Route, don't do.** Work that matches a specialist goes to that specialist. Do it inline
    only when it is smaller than the cost of a handoff — one file, obvious, reversible.
@@ -102,32 +114,6 @@ routing table, the dispatch contract, the escalation ladder and the unattended l
 5. **State lives in the repo.** `.claude/crew/{CONTEXT,DECISIONS,BOARD,QUESTIONS}.md`,
    created on first dispatch. Agents read `DECISIONS.md` before asking anything, and never
    ask me directly — a block is tagged for a peer or for me, and the supervisor relays.
-
-### Problem → first responder
-
-Match the symptom, not the job title. Route on the first message, never wait to be asked.
-
-| What I actually said | Goes to |
-|---|---|
-| "it's broken", "this errors", a stack trace | `senior-developer` (root cause) → `senior-tester` (regression test) |
-| "it's slow", "this times out" | `senior-developer` + `standards/performance.md`; `principal-architect` if it is structural |
-| "review this", "does this look right", a diff or PR | `senior-code-reviewer` |
-| "how should this be built", "where does this go", stack choice | `principal-architect` |
-| "build X", "it should be better", any wish without a spec | `product-manager` first — two engineers would build different things |
-| "how long", "what order", "split this up" | `engineering-manager` |
-| "it looks wrong", "ugly", "reads like a template" | `designer` |
-| README, ADR, changelog, post, email, any prose I send | `doc-writer` → `deslopify` before it goes out |
-| terms, policy, disclaimer, consent, liability | `legal-writer` |
-| "is there a better tool/MCP/library for this" | `explorer` |
-| the same chore again, nobody owns it | `hiring-a-specialist` on the second occurrence |
-| job, recruiter, referral, apply, resume, interview | `career-assistant` |
-| "why", "teach me", "explain" | `mentor`, layered on whoever else runs — never instead of them |
-| big, vague, crosses three roles | `founder` routes; `crew` holds the dispatch protocol |
-
-**Skill or agent?** A skill runs in this thread and sees the conversation. An agent runs in
-its own context window and sees only what the dispatch carries. Use the skill by default;
-use the agent when the reading the work needs would crowd this thread out, or when several
-independent pieces can run at once. Same role either way — the rules are the same file.
 
 ### Registry and domains
 
@@ -150,9 +136,8 @@ until I ask for a push, which is my problem to remember, not yours to solve auto
 
 Never commit a secret. `.gitignore` is an allowlist so machine state and credentials stay
 out by default; machine-specific settings go in `settings.local.json`, which is ignored.
-Machine setup — API keys, MCP auth, plugin install — is described in `SETUP.md`. Read that
-file only when setting up a machine or when a tool is missing; it is not context for normal
-work.
+Machine setup — API keys, MCP auth, plugin install — is in `SETUP.md`. Read it only when
+setting up a machine or when a tool is missing.
 
 Nothing fails on a missing value. An absent key, MCP, or settings file degrades that one
 capability and says so out loud. Never invent a value to fill a gap.
@@ -163,43 +148,60 @@ capability and says so out loud. Never invent a value to fill a gap.
 **Reviewing a diff, branch, or PR -> invoke `senior-code-reviewer` first.** Before the
 first finding.
 
-They carry the rules that keep costing me when they get skipped:
-
-- structure — constants, helpers, utils, middleware, external clients, service, router,
-  handler, repository; logic in the layer that owns it
-- performance — no sequential I/O in a loop (`asyncio.gather` / `Promise.all`, bounded),
-  no unbounded `while True`, no N+1, no scan of a partitioned table without the partition
-  key, indexed predicates, batched writes, timeouts everywhere
-- reuse — grep before writing; no second implementation of a rule that already exists
-- design — HLD boundary and LLD responsibility checked while writing, not only at review
-- comments — minimum count. Only deliberate choices, non-obvious mechanism, owned TODOs,
-  landmines. Never restate the code.
-- library facts — verify current behaviour via **context7 MCP**, do not recall
+They carry the rules that keep costing me when skipped: layering and where logic lives,
+performance (no sequential I/O in a loop, no N+1, bounded loops, indexed and partition-keyed
+queries, timeouts), grep-before-write reuse, design checked while writing, minimum comments,
+and library facts verified via **context7 MCP** rather than recalled.
 
 **Exempt: genuinely one-line-ish changes.** Typo, rename, log string, version bump,
 constant tweak — no new logic, no new I/O, no query, no contract change. Just do it.
-
 Everything else — a feature, a bug fix, a refactor, anything touching a loop, a query, or
-an external call — goes through the skill. Unsure which side it falls on -> it is not
-one-line. Invoke.
+an external call — goes through the skill. Unsure -> it is not one-line. Invoke.
+
+## Test cadence — build first, test once at the end
+
+Write the code correctly the first time, then test. No test runs mid-implementation: no
+re-running suites, builds or e2e after each edit. The point is uninterrupted building, not
+speed — stopping to test every step breaks the flow and burns resources. The unit is one
+feature: finish it, then test it, so failures stay small enough to trace.
+- Write tests alongside the code (they still change in the same change as behaviour), but run
+  them once, when the feature or batch is complete.
+- End of work: lint + typecheck + the touched tests; full suite, build and e2e once per batch.
+- A failure at the end -> fix, then re-run only the failing file, not everything.
+- One allowed early run: a bug's regression test, run once against the unfixed code to see it
+  red. That is proof the test can fail, not a mid-build re-run.
+- Overrides TDD-style "run the test after every step" guidance from any skill. A project's own
+  cadence rule (e.g. its CLAUDE.md) still wins where stricter about *what* runs at the end.
+
+## Editing any prompt — CLAUDE.md, skills, agent files, dispatch briefs
+
+A prompt is code for a model. Edit it like code, not like a log. Checklist and sources:
+`~/.claude/standards/prompting.md`.
+- Before adding a line, find the line that already owns the topic: sharpen it, merge into it,
+  or delete it. Appending a near-duplicate makes the model weigh two versions.
+- Each rule states the behaviour and its reason in one place. A rule without its why gets
+  applied too widely or too narrowly.
+- Delete lines that no longer change behaviour (stale, obvious, contradicted elsewhere).
+- Structure for the reader: what it is, when it applies, what to do, what to return.
+- Dispatch briefs follow the dispatch contract in `Skill(crew)` — everything the agent cannot
+  see, nothing more.
 
 ## Standards (read when relevant, do not preload)
 
-- `~/.claude/standards/engineering.md` — layering, folders, constants, naming, comments, done-checklist
+- `~/.claude/standards/engineering.md` — layering, folders, constants, naming, comments, tool traps, done-checklist
 - `~/.claude/standards/performance.md` — parallelism, loops, query and I/O cost rules
 - `~/.claude/standards/architecture.md` — how to pick an architecture, HLD/LLD, anti-patterns
 - `~/.claude/standards/docs.md` — doc types + required sections
 - `~/.claude/standards/style.md` — full voice rules
-
-Project conventions beat these standards. Match surrounding code.
+- `~/.claude/standards/prompting.md` — how to write and edit any prompt file
 
 ## Always
 
 - Read before you edit. Verify before you claim. Paste real output, never assert a green test.
 - **Use the project's own context first.** Read the project CLAUDE.md, the existing
-  patterns, the neighbouring file. A convention already in the repo beats a rule in here;
-  match the surrounding code. `.claude/crew/DECISIONS.md` answers most "why is it like
-  this" before it becomes a question.
+  patterns, the neighbouring file. A convention already in the repo beats a rule in here or
+  in the standards; match the surrounding code. `.claude/crew/DECISIONS.md` answers most
+  "why is it like this" before it becomes a question.
 - **Understand a command before running it.** Know what it touches and whether it can be
   undone. Never run something destructive, outward-facing, or wide-reaching on a guess:
   recursive delete, force push, history rewrite, `reset --hard`, dropping or truncating,
@@ -214,8 +216,10 @@ Project conventions beat these standards. Match surrounding code.
 
 ## Action items — end every response with them
 
-Last thing in every reply, after all detail, under a `## Action items` heading:
+Last thing in every reply to me, after all detail, under a `## Action items` heading:
 a short numbered list of what **I** must do next. Not what you did.
+(A dispatched agent writes to the supervisor, not me: it returns its receipt and no Action
+items block — `standards/style.md`, "Who you are writing to".)
 
 - Only things needing a human: run a command, review a diff, decide, get an account,
   answer an open question, test on a device.
@@ -230,7 +234,6 @@ a short numbered list of what **I** must do next. Not what you did.
 
 Lessons learned get written into these skills automatically at session end via the
 `learn` skill. Log is `~/.claude/LEARNINGS.md`. Run `/learn` anytime to capture one now.
-
-`learn` is also the crew's maintainer: it sharpens the rule that already owns a topic
-rather than appending a near-duplicate, keeps rules in `skills/` and wrappers in `agents/`,
-chases cross-references a change invalidated, and commits. Nothing else edits the team.
+`learn` is also the crew's maintainer: it keeps rules in `skills/` and wrappers in `agents/`,
+chases cross-references a change invalidated, and leaves its edits uncommitted like any other
+change here.
