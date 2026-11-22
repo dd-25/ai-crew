@@ -23,3 +23,6 @@
 settings.local.json
 *.doctor-backup-*
 **/node_modules/
+
+# Synced from the Claude app (vendor skills, 4+ MB, not part of the crew).
+skills/synced/
