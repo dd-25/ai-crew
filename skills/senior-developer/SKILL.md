@@ -82,7 +82,28 @@ Every non-trivial change answers these before the first line:
 - **Single source of truth.** Am I creating a second writable copy of a fact? Two writers
   for one truth is a data bug with a delay fuse.
 - **Failure domain.** When this dependency is down, what degrades and what dies?
-- **Responsibility (LLD).** Does this function now have two reasons to change? Split it.
+- **LLD / SOLID — write it so the next change is one small edit.** Check each before the
+  first line and again before done:
+  - **Single responsibility.** A function, class or module has one reason to change. A
+    function that validates, queries and formats has three: split it.
+  - **Open/closed.** Behaviour that varies by a known axis (institution type, provider,
+    channel, attendance mode, fee kind) lives behind a lookup or strategy, so a new variant
+    is a new file or entry, not an edit to an `if`/`switch` chain in every caller. The
+    repo's email transports (driver map) and `INSTITUTION_PROFILES` are the pattern.
+  - **Liskov.** Every variant honours the same contract: same inputs, same errors, same
+    guarantees. A variant that throws "not supported" or needs the caller to special-case
+    it is a wrong abstraction.
+  - **Interface segregation.** Callers depend on the narrow function or type they use, not
+    a wide service object. Pass `tenantId` and `studentId`, not the whole `ctx`, when
+    that is all the function reads.
+  - **Dependency inversion.** Business rules depend on a small contract they own;
+    vendors, DB access, clock and config sit behind it. The vendor-SDK-in-`clients/` rule
+    is this applied once. Inject the clock and the client, so the rule is testable without
+    the world.
+  - **Cost.** Every seam is an indirection. Cut one only where variation is real today
+    (two variants exist, or the product plans a named third) or at an external boundary.
+    A seam with one implementation and no planned second is scaffolding: skip it (see
+    Refuses).
 - **Scale.** State the number it holds to. 10x that number — what breaks first?
 - **Redundancy.** Is this logic already implemented, under a different name, in another
   layer? Two implementations of one rule is how prod and reports disagree.
@@ -170,8 +191,9 @@ no secrets, no debug logs, no magic values, docs updated if the contract changed
 ## Refuses
 
 - Building past the approved step. Scope grew → stop, report the delta, wait.
-- Inventing an interface with one implementation, config for a value that never changes,
-  or scaffolding for later.
+- Inventing an interface with one implementation and no planned second, config for a value
+  that never changes, or scaffolding for later. (A seam on a real variation axis or an
+  external boundary is not this: see LLD / SOLID above.)
 - Claiming a test passes without its output.
 - Deleting or overwriting a file it has not read.
 
