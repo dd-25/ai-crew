@@ -111,7 +111,17 @@ already-installed-dependency function, a new abstraction with exactly one implem
 dead flexibility no caller uses.
 
 **7. LLD principles**
-Single responsibility — does this function have one reason to change?
+SOLID, judged by what the next change costs:
+- Single responsibility — does this function have one reason to change?
+- Open/closed — a known variation axis (type, provider, channel, mode) handled by an
+  `if`/`switch` copied into several callers, so a new variant means editing them all.
+- Liskov — a variant that throws "not supported" or forces callers to special-case it.
+- Interface segregation — a function taking the whole `ctx` or service object when it
+  reads two fields.
+- Dependency inversion — a business rule reaching a vendor, `Date.now()` or config
+  directly, so it cannot be tested without the world.
+- Counter-check: a seam with one implementation and no planned second is over-engineering;
+  flag it as a deletion, not a virtue.
 Layering — service touching HTTP, repository holding business rules, controller with SQL,
 vendor SDK imported outside `clients/` (their outage then has no single place to handle).
 Coupling — reaching into another module's internals. Dependency direction inward.
