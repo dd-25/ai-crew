@@ -166,7 +166,11 @@ speed — stopping to test every step breaks the flow and burns resources. The u
 feature: finish it, then test it, so failures stay small enough to trace.
 - Write tests alongside the code (they still change in the same change as behaviour), but run
   them once, when the feature or batch is complete.
-- End of work: lint + typecheck + the touched tests; full suite, build and e2e once per batch.
+- End of work: lint + typecheck + the touched tests; full suite and build once per batch.
+- **e2e (Playwright): never run it unless Dhruv says so in that task.** It costs too much of
+  his time and tokens. Still write or update the specs, since tests move with behaviour, and
+  report them as "written, NOT RUN". This also overrides any project doc that says to run
+  e2e at the end of a batch. Put the rule in every dispatch brief that touches tests.
 - A failure at the end -> fix, then re-run only the failing file, not everything.
 - One allowed early run: a bug's regression test, run once against the unfixed code to see it
   red. That is proof the test can fail, not a mid-build re-run.
